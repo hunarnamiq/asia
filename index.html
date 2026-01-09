@@ -22,7 +22,6 @@
             color: var(--brand-dark); 
             margin: 0; 
             padding: 0; 
-            overflow-x: hidden;
         }
         
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
@@ -38,26 +37,16 @@
             min-height: 60px;
         }
 
-        /* Responsive Container */
         .menu-container {
             width: 95%;
             max-width: 2200px;
-            margin: 20px auto;
+            margin: 40px auto;
             background: var(--bg-cream);
-            padding: 30px 15px; /* Mobile default */
+            padding: 80px 100px;
             box-shadow: 0 40px 100px rgba(0,0,0,0.15);
             border-radius: 2px;
             border: 1px solid var(--border-soft);
             position: relative;
-            box-sizing: border-box;
-        }
-
-        /* Desktop Container */
-        @media (min-width: 1024px) {
-            .menu-container {
-                margin: 40px auto;
-                padding: 80px 100px;
-            }
         }
 
         .menu-container::before {
@@ -81,35 +70,23 @@
                 border: none; 
             }
             .menu-container::before { display: none; }
+            
+            .page-break-section {
+                page-break-before: always;
+                break-before: page;
+                margin-top: 0 !important;
+                padding-top: 20px !important;
+            }
         }
 
-        /* Header Scaling */
-        .header-title { font-size: 18vw; line-height: 1; }
-        .sub-header { font-size: 5vw; letter-spacing: 0.2em; }
-        .tagline { font-size: 4vw; }
-
-        @media (min-width: 1024px) {
-            .header-title { font-size: 12rem; }
-            .sub-header { font-size: 3rem; letter-spacing: 0.4em; }
-            .tagline { font-size: 1.875rem; }
-        }
-
-        /* Category Header Scaling */
         .category-header {
             border-bottom: 4px double var(--brand-gold);
-            margin-top: 3rem;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
+            margin-top: 6rem;
+            margin-bottom: 3rem;
+            padding-bottom: 1.5rem;
             text-align: center;
         }
-        .category-header h2 { font-size: 8vw; font-weight: 900; text-transform: uppercase; }
 
-        @media (min-width: 1024px) {
-            .category-header { margin-top: 6rem; margin-bottom: 3rem; padding-bottom: 1.5rem; }
-            .category-header h2 { font-size: 4.5rem; }
-        }
-
-        /* Table to Mobile Stack */
         .menu-table { 
             width: 100%; 
             border-collapse: collapse; 
@@ -117,94 +94,74 @@
             position: relative;
             z-index: 1;
         }
-
-        .menu-table tr {
-            display: flex;
-            flex-direction: column;
-            border-bottom: 1px solid var(--border-soft);
-            padding: 30px 0;
-            align-items: center;
-            text-align: center;
-        }
-
+        
         .menu-table td { 
-            display: block; 
-            width: 100% !important; 
-            padding: 10px 0 !important; 
+            padding: 40px 0; 
+            vertical-align: middle; 
+            border-bottom: 1px solid var(--border-soft); 
         }
 
-        @media (min-width: 1024px) {
-            .menu-table tr { display: table-row; text-align: left; }
-            .menu-table td { display: table-cell; padding: 40px 0 !important; vertical-align: middle; border-bottom: 1px solid var(--border-soft); }
-            
-            .col-num { width: 1%; white-space: nowrap; padding-right: 35px !important; }
-            .col-img-box { width: 1%; white-space: nowrap; padding-right: 60px !important; }
-            .col-img-box-right { width: 1%; white-space: nowrap; padding-left: 60px !important; }
-            .col-text { width: auto; }
-            .col-price { width: 1%; white-space: nowrap; padding: 0 50px !important; text-align: right !important; }
+        /* --- DESKTOP TABLE COLUMN LOGIC --- */
+        .col-num { width: 1%; white-space: nowrap; padding-right: 35px !important; }
+        .col-img-box { width: 1%; white-space: nowrap; padding-right: 60px !important; }
+        .col-img-box-right { width: 1%; white-space: nowrap; padding-left: 60px !important; }
+        
+        .col-price { 
+            width: 1%; 
+            white-space: nowrap; 
+            font-size: 3rem; 
+            font-weight: 700; 
+            font-family: 'Playfair Display', serif;
+            color: var(--brand-gold); 
+            padding: 0 50px !important;
         }
 
-        /* Items Styling */
+        .col-text { width: auto; text-align: left; }
+
         .num-badge {
             display: inline-flex; align-items: center; justify-content: center;
-            width: 60px; height: 60px; background-color: var(--brand-dark);
+            width: 75px; height: 75px; background-color: var(--brand-dark);
             color: #fff; border-radius: 50%; font-weight: 900; 
-            font-size: 1.5rem; font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            font-family: 'Inter', sans-serif;
             border: 2px solid var(--brand-gold);
-            margin-bottom: 15px;
         }
-        @media (min-width: 1024px) {
-            .num-badge { width: 75px; height: 75px; font-size: 1.8rem; margin-bottom: 0; }
-        }
-
         .num-badge-veggie { background-color: var(--brand-veggie); border-color: #8dbd86; }
 
         .item-title {
-            font-size: 1.8rem; font-weight: 700; color: #111; line-height: 1.2;
-            display: block; font-family: 'Playfair Display', serif;
-        }
-        @media (min-width: 1024px) {
-            .item-title { font-size: 2.8rem; }
+            font-size: 2.8rem;
+            font-weight: 700; 
+            color: #111; 
+            line-height: 1.2;
+            display: block;
+            font-family: 'Playfair Display', serif;
         }
         
         .veggie-label {
             display: inline-block;
-            font-size: 0.9rem; background: #f0fdf4; color: var(--brand-veggie);
-            padding: 2px 10px; border-radius: 4px; border: 1px solid #c7e9c3;
-            margin-top: 5px; font-family: 'Inter', sans-serif;
-            text-transform: uppercase; letter-spacing: 1px;
-        }
-        @media (min-width: 1024px) {
-            .veggie-label { font-size: 1.1rem; padding: 4px 16px; margin-left: 15px; margin-top: 0; vertical-align: middle; }
+            font-size: 1.1rem; background: #f0fdf4; color: var(--brand-veggie);
+            padding: 4px 16px; border-radius: 4px; border: 1px solid #c7e9c3;
+            margin-left: 15px; vertical-align: middle;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .item-description { 
-            font-size: 1.1rem; line-height: 1.5; color: #4b5563; 
-            margin: 10px auto 0; font-weight: 400; font-style: italic;
+            font-size: 1.8rem; 
+            line-height: 1.6; 
+            color: #4b5563; 
+            margin-top: 12px;
+            font-weight: 400;
+            font-style: italic;
             max-width: 90%;
-        }
-        @media (min-width: 1024px) {
-            .item-description { font-size: 1.8rem; line-height: 1.6; margin-top: 12px; max-width: 90%; text-align: left; }
-        }
-
-        .price-tag {
-            font-size: 2rem; font-weight: 700; font-family: 'Playfair Display', serif;
-            color: var(--brand-gold); margin-top: 10px;
-        }
-        @media (min-width: 1024px) {
-            .price-tag { font-size: 3rem; margin-top: 0; }
         }
 
         .img-wrapper {
-            width: 260px; height: 260px; 
+            width: 380px; height: 380px; 
             overflow: hidden; background: #fff; position: relative;
             box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-            margin: 15px auto;
         }
-        @media (min-width: 1024px) {
-            .img-wrapper { width: 380px; height: 380px; margin: 0; }
-        }
-
         .style-square { border-radius: 8px; border: 1px solid var(--border-soft); }
         .style-circle { border-radius: 50%; border: 8px solid #fff; outline: 1px solid var(--border-soft); }
 
@@ -213,28 +170,88 @@
         .placeholder-box {
             position: absolute; inset: 0; display: flex; flex-direction: column;
             align-items: center; justify-content: center; background: #ece8db;
-            color: #8b8678; text-align: center; font-size: 0.8rem;
+            color: #8b8678; text-align: center; font-size: 1rem;
             font-family: 'Inter', sans-serif;
         }
-        @media (min-width: 1024px) {
-            .placeholder-box { font-size: 1rem; }
+
+        /* --- MOBILE & TABLET RESPONSIVE OVERRIDES --- */
+        @media (max-width: 1199px) {
+            .menu-container {
+                width: 100%;
+                margin: 0;
+                padding: 40px 20px;
+                border: none;
+            }
+
+            header .text-center { margin-bottom: 2rem; }
+            header h1 { font-size: 18vw !important; } /* Scales ASIA text to screen */
+            header p.text-5xl { font-size: 5vw !important; letter-spacing: 0.1em; }
+            header .text-3xl { font-size: 3.5vw !important; }
+
+            .category-header h2 { font-size: 3rem !important; }
+            .category-header { margin-top: 3rem; margin-bottom: 1.5rem; }
+
+            /* Convert table to cards */
+            .menu-table, .menu-table tbody, .menu-table tr, .menu-table td {
+                display: block;
+                width: 100% !important;
+                text-align: center !important;
+            }
+
+            .menu-table tr {
+                padding: 40px 0;
+                border-bottom: 1px solid var(--border-soft);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .col-num { padding: 0 0 20px 0 !important; }
+            .num-badge { width: 60px; height: 60px; font-size: 1.4rem; }
+
+            /* Image sizing on mobile */
+            .img-wrapper {
+                width: 80vw;
+                height: 80vw;
+                max-width: 400px;
+                max-height: 400px;
+                margin: 0 auto 30px;
+            }
+            .col-img-box, .col-img-box-right { 
+                padding: 0 !important; 
+                order: -1; /* Move image to top of card */
+            }
+
+            .col-text { padding: 0 !important; }
+            .item-title { font-size: 2rem !important; }
+            .item-description { font-size: 1.2rem !important; margin: 10px auto; }
+            
+            .col-price { 
+                font-size: 2.2rem !important; 
+                padding: 15px 0 0 0 !important; 
+                display: block;
+                width: 100%;
+            }
+
+            .veggie-label { display: block; margin: 10px auto; width: fit-content; }
         }
     </style>
 </head>
 <body>
 
-    <div class="admin-bar"></div>
+    <div class="admin-bar flex items-center justify-between">
+    </div>
 
     <div class="menu-container">
-        <header class="text-center mb-12 lg:mb-24 relative z-10">
-            <div class="inline-block border-y-2 border-amber-800 py-3 lg:py-6 mb-4 lg:mb-6">
-                <h1 class="header-title text-gray-900 font-black tracking-tighter uppercase leading-none">ASIA</h1>
+        <header class="text-center mb-24 relative z-10">
+            <div class="inline-block border-y-2 border-amber-800 py-6 mb-6">
+                <h1 class="main-title text-[12rem] text-gray-900 font-black tracking-tighter uppercase leading-none">ASIA</h1>
             </div>
-            <p class="sub-header uppercase text-amber-800 font-bold">Restaurant & Grill</p>
-            <div class="mt-4 lg:mt-8 flex items-center justify-center gap-2 lg:gap-6">
-                <span class="hidden lg:block h-[2px] w-32 bg-amber-800"></span>
-                <span class="tagline italic text-gray-600 font-medium">Fine Middle Eastern Cuisine</span>
-                <span class="hidden lg:block h-[2px] w-32 bg-amber-800"></span>
+            <p class="text-5xl uppercase tracking-[0.4em] text-amber-800 font-bold">Restaurant & Grill</p>
+            <div class="mt-8 flex items-center justify-center gap-6">
+                <span class="hidden md:block h-[2px] w-32 bg-amber-800"></span>
+                <span class="text-3xl italic text-gray-600 font-medium">Fine Middle Eastern Cuisine</span>
+                <span class="hidden md:block h-[2px] w-32 bg-amber-800"></span>
             </div>
         </header>
 
@@ -256,7 +273,7 @@
             [11, "Biryani", "Fragrant rice with tender pieces of chicken and lamb.", "£10.99", "poultry"],
             [12, "Chicken Shawarma", "Roasted boneless chicken, marinated with lemon and garlic.", "£9.49", "shawarma"],
             [13, "Beef Shawarma", "Roasted boneless beef, marinated with lemon and onion.", "£11.49", "shawarma"],
-            [14, "Mixed Shawarma", "Combination of roasted beef and chicken xhawarma.", "£11.49", "shawarma"],
+            [14, "Mixed Shawarma", "Combination of roasted beef and chicken shawarma.", "£11.49", "shawarma"],
             [15, "Chicken Shawarma & Lamb Shish", "Chicken shawarma paired with lamb cubes.", "£10.99", "shawarma"],
             [16, "Chicken Shawarma & Chicken Shish", "Chicken shawarma paired with chicken cubes.", "£10.49", "shawarma"],
             [17, "Chicken Shawarma & Lamb Kafta", "Chicken shawarma paired with minced lamb.", "£10.99", "shawarma"],
@@ -333,12 +350,12 @@
 
         const categories = [
             { id: 'lamb', title: 'Signature Lamb Dishes' },
-            { id: 'poultry', title: 'Chicken & Rice Poultry' },
-            { id: 'shawarma', title: 'Asia Shawarma' },
-            { id: 'wraps', title: 'Sandwiches & Wraps' },
-            { id: 'grills', title: 'Charcoal Grill' },
-            { id: 'specials', title: 'Chef Specials & Seasonal' },
-            { id: 'stews', title: 'Stews & Vegetarian Specialties' },
+            { id: 'poultry', title: 'Chicken & Rice Poultry', forceBreak: true },
+            { id: 'shawarma', title: 'Asia Shawarma', forceBreak: true },
+            { id: 'wraps', title: 'Sandwiches & Wraps', forceBreak: true },
+            { id: 'grills', title: 'Charcoal Grill', forceBreak: true },
+            { id: 'specials', title: 'Chef Specials & Seasonal', forceBreak: true },
+            { id: 'stews', title: 'Stews & Vegetarian Specialties', forceBreak: true },
             { id: 'basics', title: 'Basics & Sides' },
             { id: 'extras', title: 'Drinks & Desserts' },
             { id: 'kids', title: 'Kids Selection' },
@@ -346,13 +363,21 @@
         ];
 
         const container = document.getElementById('menu-content');
-        const getSafeFilename = (name) => name.replace(/\(V\)/g, '').replace(/[:]/g, '').trim().replace(/\s+/g, '_').toLowerCase() + ".png";
+
+        const getSafeFilename = (name) => {
+            return name.replace(/\(V\)/g, '').replace(/[:]/g, '').trim().replace(/\s+/g, '_').toLowerCase() + ".png";
+        };
 
         let globalIdx = 0;
         categories.forEach(cat => {
             const items = allItems.filter(i => i[4] === cat.id);
             if (!items.length) return;
             const section = document.createElement('section');
+            
+            if (cat.forceBreak) {
+                section.className = "page-break-section";
+            }
+
             let itemHTML = '';
             
             items.forEach(item => {
@@ -364,7 +389,7 @@
                 
                 if (isEven) {
                     itemHTML += `
-                        <tr>
+                        <tr class="menu-row">
                             <td class="col-num"><span class="num-badge ${isVeg?'num-badge-veggie':''}">${idNum}</span></td>
                             <td class="col-img-box">
                                 <div class="img-wrapper style-square">
@@ -373,21 +398,21 @@
                                 </div>
                             </td>
                             <td class="col-text">
-                                <span class="item-title">${cleanT} ${isVeg?'<br class="lg:hidden"><span class="veggie-label">Vegetarian</span>':''}</span>
+                                <span class="item-title">${cleanT} ${isVeg?'<span class="veggie-label">Vegetarian</span>':''}</span>
                                 <p class="item-description">${item[2]}</p>
                             </td>
-                            <td class="col-price"><div class="price-tag">${item[3]}</div></td>
+                            <td class="col-price">${item[3]}</td>
                         </tr>
                     `;
                 } else {
                     itemHTML += `
-                        <tr>
+                        <tr class="menu-row">
                             <td class="col-num"><span class="num-badge ${isVeg?'num-badge-veggie':''}">${idNum}</span></td>
                             <td class="col-text">
-                                <span class="item-title">${cleanT} ${isVeg?'<br class="lg:hidden"><span class="veggie-label">Vegetarian</span>':''}</span>
+                                <span class="item-title">${cleanT} ${isVeg?'<span class="veggie-label">Vegetarian</span>':''}</span>
                                 <p class="item-description">${item[2]}</p>
                             </td>
-                            <td class="col-price"><div class="price-tag">${item[3]}</div></td>
+                            <td class="col-price">${item[3]}</td>
                             <td class="col-img-box-right">
                                 <div class="img-wrapper style-circle">
                                     <div class="placeholder-box" id="placeholder-${idNum}">PREPARING<br>${filename}</div>
@@ -401,7 +426,7 @@
             });
 
             section.innerHTML = `
-                <div class="category-header"><h2>${cat.title}</h2></div>
+                <div class="category-header"><h2 class="text-7xl font-black uppercase tracking-tight text-gray-800">${cat.title}</h2></div>
                 <table class="menu-table"><tbody>${itemHTML}</tbody></table>
             `;
             container.appendChild(section);
