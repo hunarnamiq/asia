@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asia Restaurant and  Grill house </title>
+    <title>Asia Restaurant and Grill house </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;600;700;900&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -29,12 +29,18 @@
         .admin-bar {
             background: var(--brand-dark);
             color: white;
-            padding: 20px;
+            padding: 15px 20px; /* Adjusted padding for better fit */
             position: sticky;
             top: 0;
             z-index: 1000;
             border-bottom: 3px solid var(--brand-gold);
             min-height: 60px;
+        }
+
+        /* Added hover effect for address link */
+        .address-link:hover {
+            color: #e2dcc8;
+            text-decoration: underline;
         }
 
         .menu-container {
@@ -234,12 +240,36 @@
             }
 
             .veggie-label { display: block; margin: 10px auto; width: fit-content; }
+            
+            /* Admin bar stack on very small screens */
+            .admin-bar {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="admin-bar flex items-center justify-between">
+        <!-- ADDRESS / MAP LINK -->
+        <a href="https://www.google.com/maps/search/?api=1&query=5+Fitzwilliam+St,+Peterborough+PE1+2RU" target="_blank" class="address-link flex items-center gap-2 text-white transition-colors" title="Open in Google Maps">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span class="font-sans text-sm md:text-lg">5 Fitzwilliam St, Peterborough PE1 2RU</span>
+        </a>
+
+        <!-- CALL BUTTON -->
+        <a href="tel:01733562530" class="flex items-center gap-2 bg-[#926627] hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-full transition-colors border border-[#e2dcc8] shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <span class="font-sans text-sm md:text-lg">01733 562530</span>
+        </a>
     </div>
 
     <div class="menu-container">
@@ -434,3 +464,4 @@
     </script>
 </body>
 </html>
+
