@@ -77,11 +77,10 @@
             }
             .menu-container::before { display: none; }
             
+            /* Page break classes removed to allow continuous flow */
             .page-break-section {
-                page-break-before: always;
-                break-before: page;
-                margin-top: 0 !important;
-                padding-top: 20px !important;
+                page-break-before: auto !important;
+                break-before: auto !important;
             }
         }
 
@@ -380,12 +379,12 @@
 
         const categories = [
             { id: 'lamb', title: 'Signature Lamb Dishes' },
-            { id: 'poultry', title: 'Chicken & Rice Poultry', forceBreak: true },
-            { id: 'shawarma', title: 'Asia Shawarma', forceBreak: true },
-            { id: 'wraps', title: 'Sandwiches & Wraps', forceBreak: true },
-            { id: 'grills', title: 'Charcoal Grill', forceBreak: true },
-            { id: 'specials', title: 'Chef Specials & Seasonal', forceBreak: false }, // Break removed as requested
-            { id: 'stews', title: 'Stews & Vegetarian Specialties', forceBreak: true },
+            { id: 'poultry', title: 'Chicken & Rice Poultry' },
+            { id: 'shawarma', title: 'Asia Shawarma' },
+            { id: 'wraps', title: 'Sandwiches & Wraps' },
+            { id: 'grills', title: 'Charcoal Grill' },
+            { id: 'specials', title: 'Chef Specials & Seasonal' },
+            { id: 'stews', title: 'Stews & Vegetarian Specialties' },
             { id: 'basics', title: 'Basics & Sides' },
             { id: 'extras', title: 'Drinks & Desserts' },
             { id: 'kids', title: 'Kids Selection' },
@@ -403,10 +402,7 @@
             const items = allItems.filter(i => i[4] === cat.id);
             if (!items.length) return;
             const section = document.createElement('section');
-            
-            if (cat.forceBreak) {
-                section.className = "page-break-section";
-            }
+            section.className = "menu-section"; // Forced breaks removed
 
             let itemHTML = '';
             
