@@ -1,10 +1,13 @@
-<!DOCTYPE html>
+I have this , keep it as it’s just maximum the description texts by 4 degrees, nothing else 
+
+“ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asia Restaurant and Grill house </title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;600;700;900&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -28,11 +31,18 @@
         .admin-bar {
             background: var(--brand-dark);
             color: white;
-            padding: 15px 20px;
+            padding: 15px 20px; /* Adjusted padding for better fit */
             position: sticky;
             top: 0;
             z-index: 1000;
             border-bottom: 3px solid var(--brand-gold);
+            min-height: 60px;
+        }
+
+        /* Added hover effect for address link */
+        .address-link:hover {
+            color: #e2dcc8;
+            text-decoration: underline;
         }
 
         .menu-container {
@@ -47,6 +57,35 @@
             position: relative;
         }
 
+        .menu-container::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            opacity: 0.4;
+            pointer-events: none;
+            background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+        }
+
+        @media print {
+            .admin-bar { display: none !important; }
+            body { background: white; }
+            .menu-container { 
+                box-shadow: none; 
+                margin: 0; 
+                width: 100%; 
+                max-width: 100%; 
+                padding: 40px 60px; 
+                border: none; 
+            }
+            .menu-container::before { display: none; }
+            
+            /* Page break classes removed to allow continuous flow */
+            .page-break-section {
+                page-break-before: auto !important;
+                break-before: auto !important;
+            }
+        }
+
         .category-header {
             border-bottom: 4px double var(--brand-gold);
             margin-top: 6rem;
@@ -59,14 +98,17 @@
             width: 100%; 
             border-collapse: collapse; 
             table-layout: auto; 
+            position: relative;
+            z-index: 1;
         }
         
         .menu-table td { 
-            padding: 45px 0; 
+            padding: 40px 0; 
             vertical-align: middle; 
             border-bottom: 1px solid var(--border-soft); 
         }
 
+        /* --- DESKTOP TABLE COLUMN LOGIC --- */
         .col-num { width: 1%; white-space: nowrap; padding-right: 35px !important; }
         .col-img-box { width: 1%; white-space: nowrap; padding-right: 60px !important; }
         .col-img-box-right { width: 1%; white-space: nowrap; padding-left: 60px !important; }
@@ -74,7 +116,7 @@
         .col-price { 
             width: 1%; 
             white-space: nowrap; 
-            font-size: 3.5rem; 
+            font-size: 3rem; 
             font-weight: 700; 
             font-family: 'Playfair Display', serif;
             color: var(--brand-gold); 
@@ -85,79 +127,163 @@
 
         .num-badge {
             display: inline-flex; align-items: center; justify-content: center;
-            width: 80px; height: 80px; background-color: var(--brand-dark);
+            width: 75px; height: 75px; background-color: var(--brand-dark);
             color: #fff; border-radius: 50%; font-weight: 900; 
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-family: 'Inter', sans-serif;
             border: 2px solid var(--brand-gold);
         }
         .num-badge-veggie { background-color: var(--brand-veggie); border-color: #8dbd86; }
 
         .item-title {
-            font-size: 3.2rem;
-            font-weight: 800; 
+            font-size: 2.8rem;
+            font-weight: 700; 
             color: #111; 
-            line-height: 1.1;
+            line-height: 1.2;
             display: block;
             font-family: 'Playfair Display', serif;
         }
-
-        /* INCREASED SIZE BY 55% AND MADE BOLDER */
-        .item-description { 
-            font-size: 4.8rem; 
-            line-height: 1.2; 
-            color: #1a1a1a; 
-            margin-top: 15px;
-            font-weight: 800; /* Extra Bold */
-            font-style: italic;
-            max-width: 95%;
-        }
-
-        .img-wrapper {
-            width: 420px; height: 420px; 
-            overflow: hidden; background: #fff; position: relative;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-        }
-        .style-square { border-radius: 12px; border: 1px solid var(--border-soft); }
-        .style-circle { border-radius: 50%; border: 10px solid #fff; outline: 1px solid var(--border-soft); }
-
-        .item-img { width: 100%; height: 100%; object-fit: cover; }
-
+        
         .veggie-label {
             display: inline-block;
-            font-size: 1.2rem; background: #f0fdf4; color: var(--brand-veggie);
-            padding: 6px 18px; border-radius: 4px; border: 1px solid #c7e9c3;
+            font-size: 1.1rem; background: #f0fdf4; color: var(--brand-veggie);
+            padding: 4px 16px; border-radius: 4px; border: 1px solid #c7e9c3;
             margin-left: 15px; vertical-align: middle;
             font-family: 'Inter', sans-serif;
             text-transform: uppercase;
-            font-weight: 700;
+            letter-spacing: 1px;
         }
 
+        .item-description { 
+            font-size: 1.8rem; 
+            line-height: 1.6; 
+            color: #4b5563; 
+            margin-top: 12px;
+            font-weight: 400;
+            font-style: italic;
+            max-width: 90%;
+        }
+
+        .img-wrapper {
+            width: 380px; height: 380px; 
+            overflow: hidden; background: #fff; position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+        .style-square { border-radius: 8px; border: 1px solid var(--border-soft); }
+        .style-circle { border-radius: 50%; border: 8px solid #fff; outline: 1px solid var(--border-soft); }
+
+        .item-img { width: 100%; height: 100%; object-fit: cover; }
+
+        .placeholder-box {
+            position: absolute; inset: 0; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; background: #ece8db;
+            color: #8b8678; text-align: center; font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* --- MOBILE & TABLET RESPONSIVE OVERRIDES --- */
         @media (max-width: 1199px) {
-            .menu-container { padding: 40px 20px; }
-            .item-description { font-size: 2.5rem; }
-            .img-wrapper { width: 300px; height: 300px; }
+            .menu-container {
+                width: 100%;
+                margin: 0;
+                padding: 40px 20px;
+                border: none;
+            }
+
+            header .text-center { margin-bottom: 2rem; }
+            header h1 { font-size: 18vw !important; } /* Scales ASIA text to screen */
+            header p.text-5xl { font-size: 5vw !important; letter-spacing: 0.1em; }
+            header .text-3xl { font-size: 3.5vw !important; }
+
+            .category-header h2 { font-size: 3rem !important; }
+            .category-header { margin-top: 3rem; margin-bottom: 1.5rem; }
+
+            /* Convert table to cards */
+            .menu-table, .menu-table tbody, .menu-table tr, .menu-table td {
+                display: block;
+                width: 100% !important;
+                text-align: center !important;
+            }
+
+            .menu-table tr {
+                padding: 40px 0;
+                border-bottom: 1px solid var(--border-soft);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .col-num { padding: 0 0 20px 0 !important; }
+            .num-badge { width: 60px; height: 60px; font-size: 1.4rem; }
+
+            /* Image sizing on mobile */
+            .img-wrapper {
+                width: 80vw;
+                height: 80vw;
+                max-width: 400px;
+                max-height: 400px;
+                margin: 0 auto 30px;
+            }
+            .col-img-box, .col-img-box-right { 
+                padding: 0 !important; 
+                order: -1; /* Move image to top of card */
+            }
+
+            .col-text { padding: 0 !important; }
+            .item-title { font-size: 2rem !important; }
+            .item-description { font-size: 1.2rem !important; margin: 10px auto; }
+            
+            .col-price { 
+                font-size: 2.2rem !important; 
+                padding: 15px 0 0 0 !important; 
+                display: block;
+                width: 100%;
+            }
+
+            .veggie-label { display: block; margin: 10px auto; width: fit-content; }
+            
+            /* Admin bar stack on very small screens */
+            .admin-bar {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="admin-bar flex items-center justify-between">
-        <div class="flex items-center gap-2 text-white">
-            <span class="font-sans text-lg">5 Fitzwilliam St, Peterborough PE1 2RU</span>
-        </div>
-        <div class="bg-[#926627] text-white font-bold py-2 px-6 rounded-full shadow-lg">
-            01733 562530
-        </div>
+        <!-- ADDRESS / MAP LINK -->
+        <a href="https://www.google.com/maps/search/?api=1&query=5+Fitzwilliam+St,+Peterborough+PE1+2RU" target="_blank" class="address-link flex items-center gap-2 text-white transition-colors" title="Open in Google Maps">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span class="font-sans text-sm md:text-lg">5 Fitzwilliam St, Peterborough PE1 2RU</span>
+        </a>
+
+        <!-- CALL BUTTON -->
+        <a href="tel:01733562530" class="flex items-center gap-2 bg-[#926627] hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-full transition-colors border border-[#e2dcc8] shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <span class="font-sans text-sm md:text-lg">01733 562530</span>
+        </a>
     </div>
 
     <div class="menu-container">
-        <header class="text-center mb-24">
-            <div class="inline-block border-y-4 border-amber-900 py-6 mb-6">
-                <h1 class="text-[14rem] text-gray-900 font-black tracking-tighter uppercase leading-none">ASIA</h1>
+        <header class="text-center mb-24 relative z-10">
+            <div class="inline-block border-y-2 border-amber-800 py-6 mb-6">
+                <h1 class="main-title text-[12rem] text-gray-900 font-black tracking-tighter uppercase leading-none">ASIA</h1>
             </div>
-            <p class="text-6xl uppercase tracking-[0.3em] text-amber-800 font-black">Restaurant & Grill house </p>
-            <p class="text-4xl italic text-gray-600 mt-6">Fine Middle Eastern Cuisine</p>
+            <p class="text-5xl uppercase tracking-[0.4em] text-amber-800 font-bold">Restaurant & Grill house </p>
+            <div class="mt-8 flex items-center justify-center gap-6">
+                <span class="hidden md:block h-[2px] w-32 bg-amber-800"></span>
+                <span class="text-3xl italic text-gray-600 font-medium">Fine Middle Eastern Cuisine</span>
+                <span class="hidden md:block h-[2px] w-32 bg-amber-800"></span>
+            </div>
         </header>
 
         <div id="menu-content"></div>
@@ -168,19 +294,103 @@
             [1, "Lamb On The Bone", "Tender pieces of lamb, slow-cooked in special sauce and herbs. Served with Stew, Salad, Rice & Naan Bread", "£9.99", "lamb"],
             [2, "Lamb On Bone (Large)", "Large tender pieces of lamb, slow-cooked in special sauce. Served with Stew, Salad, Rice & Naan Bread", "£12.99", "lamb"],
             [3, "Lamb Shank", "Slow-cooked lamb shank marinated in special herbs. Served with Stew, Salad, Rice & Naan Bread", "£13.40", "lamb"],
+            [4, "Tashreeb", "Naan soaked in okra and lamb stew.", "£8.89", "lamb"],
+            [5, "Lamb Loin Chops", "BBQ Lamb back loin, marinated with herbs.", "£17.99", "lamb"],
+            [6, "Lamb Chopped (Poached)", "BBQ Poached in a lightly spiced vegetable stock.", "£16.49", "lamb"],
             [7, "1/4 Chicken ", "Oven-roasted quarter chicken. Served with stews, salad, rice, and naan.", "£8.99", "poultry"],
             [8, "1/2 Chicken With Rice ", "Oven-roasted half chicken. Served with stews, salad, rice, and naan.", "£11.49", "poultry"],
+            [9, "1/2 Chicken with Salad", "Oven-roasted half chicken with salad and naan OR chips.", "£6.99", "poultry"],
+            [10, "Mixed Lamb, Chicken And Rice", "Piece of lamb on bone and quarter chicken, oven-roasted.", "£13.89", "poultry"],
+            [11, "Biryani", "Fragrant rice with tender pieces of chicken and lamb.", "£10.99", "poultry"],
             [12, "Chicken Shawarma", "Roasted boneless chicken, marinated with lemon and garlic.", "£9.49", "shawarma"],
+            [13, "Beef Shawarma", "Roasted boneless beef, marinated with lemon and onion.", "£11.49", "shawarma"],
+            [14, "Mixed Shawarma", "Combination of roasted beef and chicken shawarma.", "£11.49", "shawarma"],
+            [15, "Chicken Shawarma & Lamb Shish", "Chicken shawarma paired with lamb cubes.", "£11.89", "shawarma"],
+            [16, "Chicken Shawarma & Chicken Shish", "Chicken shawarma paired with chicken cubes.", "£10.89", "shawarma"],
+            [17, "Chicken Shawarma & Lamb Kafta", "Chicken shawarma paired with minced lamb.", "£10.99", "shawarma"],
+            [18, "Chicken Shawarma & Wings", "Chicken shawarma served with chicken wings.", "£9.99", "shawarma"],
+            [19, "Beef Shawarma & Lamb Shish", "Beef shawarma paired with lamb cubes.", "£11.89", "shawarma"],
+            [20, "Beef Shawarma & Chicken Shish", "Beef shawarma paired with chicken cubes.", "£11.49", "shawarma"],
+            [21, "Beef Shawarma & Lamb Kafta", "Beef shawarma paired with minced lamb.", "£11.99", "shawarma"],
+            [22, "Beef Shawarma & Wings", "Beef shawarma served with chicken wings.", "£10.99", "shawarma"],
+            [23, "Mixed Shawarma & Lamb Shish", "Beef and chicken shawarma with lamb cubes.", "£12.99", "shawarma"],
+            [24, "Mixed Shawarma & Chicken Shish & Lamb Shish", "Beef, chicken shawarma with chicken and Lamb cubes.", "£19.49", "shawarma"],
+            [25, "Mixed Shawarma & Lamb Kafta", "Beef and chicken shawarma with minced Kebab.", "£12.99", "shawarma"],
+            [26, "Mixed Shawarma & Wings", "Beef and chicken shawarma with chicken wings.", "£11.99", "shawarma"],
+            [27, "Chicken Shawarma Wrap", "Wrapped in naan with salad and sauce.", "£4.99", "wraps"],
+            [28, "Chicken Arabic Sandwich", "Chicken shawarma in Lebanese naan with salad and chips.", "£7.99", "wraps"],
+            [29, "Lamb Arabic Sandwich", "Lamb shawarma in Lebanese naan with salad and chips.", "£8.89", "wraps"],
+            [30, "Lamb Shawarma Wrap", "Lamb Shawarma Wrapped in naan with salad and sauce.", "£5.49", "wraps"],
+            [31, "Chicken Shish Wrap", "Chicken skewerd Wrapped in naan with salad and sauce.", "£5.29", "wraps"],
+            [32, "Lamb Shish Wrap", "Wrapped in naan with salad and sauce.", "£5.99", "wraps"],
+            [33, "Lamb Kafta Wrap", "minced Kaftra Wrapped in naan with salad and sauce.ADANA", "£5.89", "wraps"],
+            [34, "Mixed Shawarma Wrap", "Chicken and Lamb Shawarma Wrapped in naan with salad and sauce.", "£5.99", "wraps"],
+            [35, "Falafel Wrap (V)", "Wrapped in naan with salad and sauce.", "£4.99", "wraps"],
+            [36, "Vegetarian Wrap (V)", "Aubergine and potatoes wrapped in naan.", "£4.49", "wraps"],
             [37, "Asia Mixed Kebab Special", "Platter of Lamb Kafta, Chicken Shish, Lamb Shish, and Wings with Naan and salad.", "£18.99", "grills"],
-            [35, "Falafel Wrap (V)", "Wrapped in naan with salad and sauce.", "£4.99", "wraps"]
+            [38, "Chicken Shish", "Skewered cubes of grilled chicken breast with Naan and salad.", "£9.99", "grills"],
+            [39, "Lamb Shish", "Cubes of grilled lamb marinated in special herbs with Naan and salad.", "£11.89", "grills"],
+            [40, "Lamb Kafta Kebab", "Seasoned minced lamb with seasonal herbswith Naan and salad.", "£10.99", "grills"],
+            [41, "Chicken Wings", "Marinated with lemon, garlic, and herbs with Naan and salad.", "£8.99", "grills"],
+            [42, "Lamb Kafta & Chicken Shish", "Minced lamb skewers paired with chicken cubeswith Naan and salad .", "£11.49", "grills"],
+            [43, "Lamb Kafta & Wings", "Minced lamb skewers paired with chicken wings with Naan and salad.", "£10.99", "grills"],
+            [44, "Lamb Kafta & Drumsticks", "Minced lamb and Chicken Drumsticks with Naan and salad.", "£10.49", "grills"],
+            [45, "Lamb & Chicken Shish", "Juicy lamb cubes paired with chicken breast cubes with Naan and salad.", "£11.99", "grills"],
+            [46, "Lamb Shish & Kafta", "Grilled lamb cubes with seasoned minced lamb with Naan and salad.", "£11.49", "grills"],
+            [47, "Lamb Shish & Wings", "Grilled lamb cubes with flame-grilled chicken wings with Naan and salad.", "£10.99", "grills"],
+            [48, "Lamb Chops", "Charcoal-grilled, marinated with black pepper and herbs with Naan and salad.", "£14.49", "grills"],
+            [49, "Kurdish Kafta", "Couscous filled with lamb in tomato sauce (Fridays Only).", "£10.99", "specials"],
+            [50, "Seabass", "Char-grilled whole sea bass, seasoned with spices.", "£13.49", "specials"],
+            [51, "Patcha", "Boiled lamb-head and feet in special sauce.", "£10.99", "specials"],
+            [52, "Dolma", "Stuffed grape leaves/vegetables (Sundays Only).", "£10.99", "specials"],
+            [53, "Aubergine Stew (V)", "Aubergine, green pepper, and potatoes stew.", "£1.99", "stews"],
+            [54, "Okra Stew (V)", "Okra cooked in rich tomato sauce.", "£1.99", "stews"],
+            [55, "Kidney Beans Stew (V)", "Beans cooked in rich tomato sauce.", "£1.99", "stews"],
+            [56, "Potato Stew (V)", "Potatoes in tomato sauce with herbs.", "£1.99", "stews"],
+            [57, "Apricots In Sauce (V)", "Sweet apricots in special sauce.", "£1.99", "stews"],
+            [58, "Courgette Stew (V)", "Courgettes in tomato sauce.", "£1.99", "stews"],
+            [59, "Black-Eyed Peas (V)", "Peas in tomato sauce and garlic.", "£1.99", "stews"],
+            [60, "Keema", "Minced meat in tomato sauce.", "£1.99", "stews"],
+            [61, "Green Beans (V)", "Fresh green beans in sauce.", "£1.99", "stews"],
+            [62, "Spinach (V)", "Cooked spinach with garlic and herbs.", "£1.99", "stews"],
+            [63, "Chicken Curry", "Chicken curry with potatoes.", "£3.99", "stews"],
+            [64, "Vegetarian Stew (V)", "Stew of the day. Served with rice and naan.", "£5.99", "stews"],
+            [65, "Chickpeas (V)", "Chickpeas.", "£1.99", "stews"],
+            [66, "Lentil Soup (V)", "Hearty blended lentil soup.", "£1.99", "stews"],
+            [67, "Falafel (V)", "Deep-fried ground chickpeas and garlic.", "£7.49", "stews"],
+            [68, "Plate Of Salad (V)", "Fresh seasonal salad.", "£3.99", "stews"],
+            [69, "Bread (V)", "Fresh naan bread.", "£1.99", "basics"],
+            [70, "Rice (V)", "White or yellow rice.", "£1.99", "basics"],
+            [71, "Side: Chips (V)", "Large portion of chips.", "£2.99", "basics"],
+            [72, "Soft Drinks (Can)", "Various canned soda.", "£0.99", "extras"],
+            [73, "Soft Drinks (1.5L)", "Large bottle of soda.", "£2.99", "extras"],
+            [74, "Fresh Juice", "Orange, Apple, or Carrot juice.", "£2.49", "extras"],
+            [75, "Baklava", "Traditional sweet pastry (per piece).", "£0.99", "extras"],
+            [76, "Ice Cream", "Ben & Jerry's Ice Cream.", "£5.99", "extras"],
+            [77, "Kids: Nuggets", "4 Piece Chicken Nuggets and Chips.", "£3.49", "kids"],
+            [78, "Kids: Chicken Shish", "Chicken Shish and Chips.", "£4.99", "kids"],
+            [79, "Kids: Beefburger", "Beefburger and Chips.", "£4.99", "kids"],
+            [80, "Kids: Falafel (V)", "Falafel and Chips.", "£4.99", "kids"],
+            [81, "Deal For 2 (A)", "1/2 Chicken, Lamb, sides, rice, naans.", "£23.49", "deals"],
+            [82, "Deal For 2 (B)", "Mixed Shawarma, Half Chicken, Two PC Lamb, sides, rice.", "£28.99", "deals"],
+            [83, "Deal For 3 (A)", "Mixed Grill, Lamb Shish, Chicken Shish, Chicken Wings, Shish Kebab, Beef Donner, Chicken Donner, 3 Different Sides, Rice, Chips And Bottle Of Coke.", "£33.99", "deals"],
+            [84, "Deal For 4 (Standard)", "Beef Donner, Chicken Donner, 2 Shish Kebab, 2 Chicken Tikka, 2 Lamb Tikka, 4 Naan Bread, Salad, 1 White Rice, 1 Chips, Bottle of coke", "£44.99", "deals"],
+            [85, "Deal For 4 (Family)", "Kofte Kebab, Lamb Shish, Lamb Skewers, Chicken Skewers, Chicken Wings, Lamb Chops, Chips, Rice And Bottle Of Coke.", "£39.99", "deals"],
+            [86, "Deal For 4 or 5", "Large platter with Chops, Wings, Shawarma, Shish.", "£58.99", "deals"]
         ];
 
         const categories = [
             { id: 'lamb', title: 'Signature Lamb Dishes' },
             { id: 'poultry', title: 'Chicken & Rice Poultry' },
             { id: 'shawarma', title: 'Asia Shawarma' },
+            { id: 'wraps', title: 'Sandwiches & Wraps' },
             { id: 'grills', title: 'Charcoal Grill' },
-            { id: 'wraps', title: 'Sandwiches & Wraps' }
+            { id: 'specials', title: 'Chef Specials & Seasonal' },
+            { id: 'stews', title: 'Stews & Vegetarian Specialties' },
+            { id: 'basics', title: 'Basics & Sides' },
+            { id: 'extras', title: 'Drinks & Desserts' },
+            { id: 'kids', title: 'Kids Selection' },
+            { id: 'deals', title: 'Group Deals & Platters' }
         ];
 
         const container = document.getElementById('menu-content');
@@ -193,8 +403,9 @@
         categories.forEach(cat => {
             const items = allItems.filter(i => i[4] === cat.id);
             if (!items.length) return;
-            
             const section = document.createElement('section');
+            section.className = "menu-section"; // Forced breaks removed
+
             let itemHTML = '';
             
             items.forEach(item => {
@@ -206,11 +417,12 @@
                 
                 if (isEven) {
                     itemHTML += `
-                        <tr>
+                        <tr class="menu-row">
                             <td class="col-num"><span class="num-badge ${isVeg?'num-badge-veggie':''}">${idNum}</span></td>
                             <td class="col-img-box">
                                 <div class="img-wrapper style-square">
-                                    <img class="item-img" src="${filename}" alt="${cleanT}">
+                                    <div class="placeholder-box" id="placeholder-${idNum}">PREPARING<br>${filename}</div>
+                                    <img id="img-${idNum}" class="item-img" src="${filename}" onload="document.getElementById('placeholder-${idNum}').style.display='none'">
                                 </div>
                             </td>
                             <td class="col-text">
@@ -218,10 +430,11 @@
                                 <p class="item-description">${item[2]}</p>
                             </td>
                             <td class="col-price">${item[3]}</td>
-                        </tr>`;
+                        </tr>
+                    `;
                 } else {
                     itemHTML += `
-                        <tr>
+                        <tr class="menu-row">
                             <td class="col-num"><span class="num-badge ${isVeg?'num-badge-veggie':''}">${idNum}</span></td>
                             <td class="col-text">
                                 <span class="item-title">${cleanT} ${isVeg?'<span class="veggie-label">Vegetarian</span>':''}</span>
@@ -230,21 +443,22 @@
                             <td class="col-price">${item[3]}</td>
                             <td class="col-img-box-right">
                                 <div class="img-wrapper style-circle">
-                                    <img class="item-img" src="${filename}" alt="${cleanT}">
+                                    <div class="placeholder-box" id="placeholder-${idNum}">PREPARING<br>${filename}</div>
+                                    <img id="img-${idNum}" class="item-img" src="${filename}" onload="document.getElementById('placeholder-${idNum}').style.display='none'">
                                 </div>
                             </td>
-                        </tr>`;
+                        </tr>
+                    `;
                 }
                 globalIdx++;
             });
 
             section.innerHTML = `
-                <div class="category-header"><h2 class="text-7xl font-black uppercase text-gray-800">${cat.title}</h2></div>
+                <div class="category-header"><h2 class="text-7xl font-black uppercase tracking-tight text-gray-800">${cat.title}</h2></div>
                 <table class="menu-table"><tbody>${itemHTML}</tbody></table>
             `;
             container.appendChild(section);
         });
     </script>
 </body>
-</html>
-
+</html>”
