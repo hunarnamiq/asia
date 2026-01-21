@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asia Restaurant and Grill house </title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;600;700;900&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -36,6 +37,11 @@
             min-height: 60px;
         }
 
+        .address-link:hover {
+            color: #e2dcc8;
+            text-decoration: underline;
+        }
+
         .menu-container {
             width: 95%;
             max-width: 2200px;
@@ -57,30 +63,28 @@
             background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
         }
 
-        /* --- PRINT BREAK LOGIC --- */
         @media print {
             .admin-bar { display: none !important; }
-            body { background: white; -webkit-print-color-adjust: exact; }
+            body { background: white; }
             .menu-container { 
                 box-shadow: none; 
                 margin: 0; 
                 width: 100%; 
                 max-width: 100%; 
-                padding: 20px; 
+                padding: 40px 60px; 
                 border: none; 
             }
             .menu-container::before { display: none; }
-            .page-break { page-break-before: always; }
-            
-            /* Prevent category headers from being orphaned at bottom */
-            .category-header { page-break-after: avoid; }
-            tr { page-break-inside: avoid; }
+            .page-break-section {
+                page-break-before: auto !important;
+                break-before: auto !important;
+            }
         }
 
         .category-header {
             border-bottom: 4px double var(--brand-gold);
-            margin-top: 4rem;
-            margin-bottom: 2rem;
+            margin-top: 6rem;
+            margin-bottom: 3rem;
             padding-bottom: 1.5rem;
             text-align: center;
         }
@@ -94,7 +98,7 @@
         }
         
         .menu-table td { 
-            padding: 30px 0; 
+            padding: 40px 0; 
             vertical-align: middle; 
             border-bottom: 1px solid var(--border-soft); 
         }
@@ -123,6 +127,7 @@
             font-family: 'Inter', sans-serif;
             border: 2px solid var(--brand-gold);
         }
+        .num-badge-veggie { background-color: var(--brand-veggie); border-color: #8dbd86; }
 
         .item-title {
             font-size: 2.8rem;
@@ -132,8 +137,18 @@
             display: block;
             font-family: 'Playfair Display', serif;
         }
+        
+        .veggie-label {
+            display: inline-block;
+            font-size: 1.1rem; background: #f0fdf4; color: var(--brand-veggie);
+            padding: 4px 16px; border-radius: 4px; border: 1px solid #c7e9c3;
+            margin-left: 15px; vertical-align: middle;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-        /* Description: 55% larger, Bold Black, Readable */
+        /* UPDATED: Increased font size by 55%, made bold and pure black */
         .item-description { 
             font-size: 2.8rem; 
             line-height: 1.4; 
@@ -145,7 +160,7 @@
         }
 
         .img-wrapper {
-            width: 350px; height: 350px; 
+            width: 380px; height: 380px; 
             overflow: hidden; background: #fff; position: relative;
             box-shadow: 0 15px 40px rgba(0,0,0,0.12);
         }
@@ -162,26 +177,89 @@
         }
 
         @media (max-width: 1199px) {
-            .menu-container { width: 100%; margin: 0; padding: 40px 20px; border: none; }
+            .menu-container {
+                width: 100%;
+                margin: 0;
+                padding: 40px 20px;
+                border: none;
+            }
+
+            header .text-center { margin-bottom: 2rem; }
             header h1 { font-size: 18vw !important; }
-            .item-title { font-size: 2.2rem !important; }
-            .item-description { font-size: 1.8rem !important; }
-            .img-wrapper { width: 70vw; height: 70vw; margin: 0 auto; }
-            .menu-table tr { display: flex; flex-direction: column; align-items: center; border-bottom: 2px solid var(--border-soft); padding: 40px 0; }
-            .menu-table td { display: block; text-align: center; border: none; padding: 10px 0 !important; }
-            .col-img-box, .col-img-box-right { order: -1; }
+            header p.text-5xl { font-size: 5vw !important; letter-spacing: 0.1em; }
+            header .text-3xl { font-size: 3.5vw !important; }
+
+            .category-header h2 { font-size: 3rem !important; }
+            .category-header { margin-top: 3rem; margin-bottom: 1.5rem; }
+
+            .menu-table, .menu-table tbody, .menu-table tr, .menu-table td {
+                display: block;
+                width: 100% !important;
+                text-align: center !important;
+            }
+
+            .menu-table tr {
+                padding: 40px 0;
+                border-bottom: 1px solid var(--border-soft);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .col-num { padding: 0 0 20px 0 !important; }
+            .num-badge { width: 60px; height: 60px; font-size: 1.4rem; }
+
+            .img-wrapper {
+                width: 80vw;
+                height: 80vw;
+                max-width: 400px;
+                max-height: 400px;
+                margin: 0 auto 30px;
+            }
+            .col-img-box, .col-img-box-right { 
+                padding: 0 !important; 
+                order: -1;
+            }
+
+            .col-text { padding: 0 !important; }
+            .item-title { font-size: 2rem !important; }
+            .item-description { font-size: 1.8rem !important; margin: 10px auto; }
+            
+            .col-price { 
+                font-size: 2.2rem !important; 
+                padding: 15px 0 0 0 !important; 
+                display: block;
+                width: 100%;
+            }
+
+            .veggie-label { display: block; margin: 10px auto; width: fit-content; }
+            
+            .admin-bar {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="admin-bar flex items-center justify-between">
-        <div class="flex items-center gap-2">
+        <a href="https://www.google.com/maps/search/?api=1&query=5+Fitzwilliam+St,+Peterborough+PE1+2RU" target="_blank" class="address-link flex items-center gap-2 text-white transition-colors" title="Open in Google Maps">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                <circle cx="12" cy="10" r="3"/>
+            </svg>
             <span class="font-sans text-sm md:text-lg">5 Fitzwilliam St, Peterborough PE1 2RU</span>
-        </div>
-        <div class="bg-[#926627] py-2 px-6 rounded-full font-bold">
-            01733 562530
-        </div>
+        </a>
+
+        <a href="tel:01733562530" class="flex items-center gap-2 bg-[#926627] hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-full transition-colors border border-[#e2dcc8] shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <span class="font-sans text-sm md:text-lg">01733 562530</span>
+        </a>
     </div>
 
     <div class="menu-container">
@@ -191,7 +269,9 @@
             </div>
             <p class="text-5xl uppercase tracking-[0.4em] text-amber-800 font-bold">Restaurant & Grill house </p>
             <div class="mt-8 flex items-center justify-center gap-6">
+                <span class="hidden md:block h-[2px] w-32 bg-amber-800"></span>
                 <span class="text-3xl italic text-gray-600 font-medium">Fine Middle Eastern Cuisine</span>
+                <span class="hidden md:block h-[2px] w-32 bg-amber-800"></span>
             </div>
         </header>
 
@@ -288,26 +368,6 @@
             [86, "Deal For 4 or 5", "Large platter with Chops, Wings, Shawarma, Shish.", "£58.99", "deals"]
         ];
 
-        const container = document.getElementById('menu-content');
-        let currentItemIndex = 0;
-        let itemsInCurrentPageCount = 0;
-        let currentRuleIndex = 0; // 0: First 6, 1: Second 20, 2: Third 10, 3: Fourth 12, 4: Every 6
-
-        const rules = [
-            { items: 6, pages: 1 },
-            { items: 20, pages: 3 },
-            { items: 10, pages: 1.5 },
-            { items: 12, pages: 2 }
-        ];
-
-        function getItemsPerPage(ruleIdx) {
-            if (ruleIdx >= rules.length) return 6;
-            const r = rules[ruleIdx];
-            // Rounded to closest integer for printing logic
-            return Math.ceil(r.items / r.pages);
-        }
-
-        // We will loop through categories and items manually to control breaks precisely
         const categories = [
             { id: 'lamb', title: 'Signature Lamb Dishes' },
             { id: 'poultry', title: 'Chicken & Rice Poultry' },
@@ -322,109 +382,72 @@
             { id: 'deals', title: 'Group Deals & Platters' }
         ];
 
-        let totalItemCount = 0;
-        let currentRuleItemCount = 0;
-        let currentRuleItemsAllowed = rules[0].items;
+        const container = document.getElementById('menu-content');
 
-        categories.forEach((cat, catIdx) => {
-            const catItems = allItems.filter(i => i[4] === cat.id);
-            if (!catItems.length) return;
+        const getSafeFilename = (name) => {
+            return name.replace(/\(V\)/g, '').replace(/[:]/g, '').trim().replace(/\s+/g, '_').toLowerCase() + ".png";
+        };
 
-            const section = document.createElement('div');
-            section.className = "category-block";
+        let globalIdx = 0;
+        categories.forEach(cat => {
+            const items = allItems.filter(i => i[4] === cat.id);
+            if (!items.length) return;
+            const section = document.createElement('section');
+            section.className = "menu-section";
+
+            let itemHTML = '';
             
-            // Header
-            const header = document.createElement('div');
-            header.className = "category-header";
-            header.innerHTML = `<h2 class="text-7xl font-black uppercase tracking-tight text-gray-800">${cat.title}</h2>`;
-            section.appendChild(header);
-
-            const table = document.createElement('table');
-            table.className = "menu-table";
-            const tbody = document.createElement('tbody');
-
-            catItems.forEach((item, idx) => {
-                totalItemCount++;
-                currentRuleItemCount++;
-                itemsInCurrentPageCount++;
-
-                const itemsPerPage = getItemsPerPage(currentRuleIndex);
-
-                // Determine if we need a page break BEFORE this row
-                let forceBreak = false;
-                
-                // Rule 1-4 logic
-                if (currentRuleIndex < rules.length) {
-                    if (itemsInCurrentPageCount > itemsPerPage) {
-                        forceBreak = true;
-                        itemsInCurrentPageCount = 1;
-                    }
-                    if (currentRuleItemCount >= rules[currentRuleIndex].items) {
-                        currentRuleIndex++;
-                        currentRuleItemCount = 0;
-                        // Start fresh for new rule
-                    }
-                } else {
-                    // Rule 5+: every 6 items
-                    if (itemsInCurrentPageCount > 6) {
-                        forceBreak = true;
-                        itemsInCurrentPageCount = 1;
-                    }
-                }
-
-                // Create Row
-                const tr = document.createElement('tr');
-                if (forceBreak) tr.className = "page-break";
-                
+            items.forEach(item => {
                 const idNum = item[0];
+                const isEven = (globalIdx % 2 === 0);
                 const isVeg = item[1].includes('(V)');
                 const cleanT = item[1].replace('(V)', '').trim();
-                const filename = item[1].replace(/\(V\)/g, '').replace(/[:]/g, '').trim().replace(/\s+/g, '_').toLowerCase() + ".png";
+                const filename = getSafeFilename(item[1]);
                 
-                // Alternating images
-                const isEven = totalItemCount % 2 === 0;
-
-                let rowContent = '';
-                if (!isEven) {
-                    rowContent = `
-                        <td class="col-num"><span class="num-badge">${idNum}</span></td>
-                        <td class="col-img-box">
-                            <div class="img-wrapper style-square">
-                                <div class="placeholder-box" id="placeholder-${idNum}">PREPARING<br>${filename}</div>
-                                <img id="img-${idNum}" class="item-img" src="${filename}" onload="document.getElementById('placeholder-${idNum}').style.display='none'">
-                            </div>
-                        </td>
-                        <td class="col-text">
-                            <span class="item-title">${cleanT} ${isVeg?'<span class="text-lg bg-green-100 px-2 rounded ml-2">VEG</span>':''}</span>
-                            <p class="item-description">${item[2]}</p>
-                        </td>
-                        <td class="col-price">${item[3]}</td>
+                if (isEven) {
+                    itemHTML += `
+                        <tr class="menu-row">
+                            <td class="col-num"><span class="num-badge ${isVeg?'num-badge-veggie':''}">${idNum}</span></td>
+                            <td class="col-img-box">
+                                <div class="img-wrapper style-square">
+                                    <div class="placeholder-box" id="placeholder-${idNum}">PREPARING<br>${filename}</div>
+                                    <img id="img-${idNum}" class="item-img" src="${filename}" onload="document.getElementById('placeholder-${idNum}').style.display='none'">
+                                </div>
+                            </td>
+                            <td class="col-text">
+                                <span class="item-title">${cleanT} ${isVeg?'<span class="veggie-label">Vegetarian</span>':''}</span>
+                                <p class="item-description">${item[2]}</p>
+                            </td>
+                            <td class="col-price">${item[3]}</td>
+                        </tr>
                     `;
                 } else {
-                    rowContent = `
-                        <td class="col-num"><span class="num-badge">${idNum}</span></td>
-                        <td class="col-text">
-                            <span class="item-title">${cleanT} ${isVeg?'<span class="text-lg bg-green-100 px-2 rounded ml-2">VEG</span>':''}</span>
-                            <p class="item-description">${item[2]}</p>
-                        </td>
-                        <td class="col-price">${item[3]}</td>
-                        <td class="col-img-box-right">
-                            <div class="img-wrapper style-circle">
-                                <div class="placeholder-box" id="placeholder-${idNum}">PREPARING<br>${filename}</div>
-                                <img id="img-${idNum}" class="item-img" src="${filename}" onload="document.getElementById('placeholder-${idNum}').style.display='none'">
-                            </div>
-                        </td>
+                    itemHTML += `
+                        <tr class="menu-row">
+                            <td class="col-num"><span class="num-badge ${isVeg?'num-badge-veggie':''}">${idNum}</span></td>
+                            <td class="col-text">
+                                <span class="item-title">${cleanT} ${isVeg?'<span class="veggie-label">Vegetarian</span>':''}</span>
+                                <p class="item-description">${item[2]}</p>
+                            </td>
+                            <td class="col-price">${item[3]}</td>
+                            <td class="col-img-box-right">
+                                <div class="img-wrapper style-circle">
+                                    <div class="placeholder-box" id="placeholder-${idNum}">PREPARING<br>${filename}</div>
+                                    <img id="img-${idNum}" class="item-img" src="${filename}" onload="document.getElementById('placeholder-${idNum}').style.display='none'">
+                                </div>
+                            </td>
+                        </tr>
                     `;
                 }
-                tr.innerHTML = rowContent;
-                tbody.appendChild(tr);
+                globalIdx++;
             });
 
-            table.appendChild(tbody);
-            section.appendChild(table);
+            section.innerHTML = `
+                <div class="category-header"><h2 class="text-7xl font-black uppercase tracking-tight text-gray-800">${cat.title}</h2></div>
+                <table class="menu-table"><tbody>${itemHTML}</tbody></table>
+            `;
             container.appendChild(section);
         });
     </script>
 </body>
 </html>
-
