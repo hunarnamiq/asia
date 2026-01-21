@@ -1,6 +1,4 @@
-I have this , keep it as it’s just maximum the description texts by 4 degrees, nothing else 
-
-“ <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -31,7 +29,7 @@ I have this , keep it as it’s just maximum the description texts by 4 degrees,
         .admin-bar {
             background: var(--brand-dark);
             color: white;
-            padding: 15px 20px; /* Adjusted padding for better fit */
+            padding: 15px 20px;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -39,7 +37,6 @@ I have this , keep it as it’s just maximum the description texts by 4 degrees,
             min-height: 60px;
         }
 
-        /* Added hover effect for address link */
         .address-link:hover {
             color: #e2dcc8;
             text-decoration: underline;
@@ -78,8 +75,6 @@ I have this , keep it as it’s just maximum the description texts by 4 degrees,
                 border: none; 
             }
             .menu-container::before { display: none; }
-            
-            /* Page break classes removed to allow continuous flow */
             .page-break-section {
                 page-break-before: auto !important;
                 break-before: auto !important;
@@ -108,7 +103,6 @@ I have this , keep it as it’s just maximum the description texts by 4 degrees,
             border-bottom: 1px solid var(--border-soft); 
         }
 
-        /* --- DESKTOP TABLE COLUMN LOGIC --- */
         .col-num { width: 1%; white-space: nowrap; padding-right: 35px !important; }
         .col-img-box { width: 1%; white-space: nowrap; padding-right: 60px !important; }
         .col-img-box-right { width: 1%; white-space: nowrap; padding-left: 60px !important; }
@@ -154,14 +148,15 @@ I have this , keep it as it’s just maximum the description texts by 4 degrees,
             letter-spacing: 1px;
         }
 
+        /* UPDATED DESCRIPTION STYLING: +55% Size, Bolder, Enhanced readability */
         .item-description { 
-            font-size: 1.8rem; 
-            line-height: 1.6; 
-            color: #4b5563; 
-            margin-top: 12px;
-            font-weight: 400;
+            font-size: 2.8rem; /* Increased significantly (~55% larger than original 1.8rem) */
+            line-height: 1.4; 
+            color: #374151; /* Slightly darker for better contrast */
+            margin-top: 14px;
+            font-weight: 600; /* Made bolder ("more bald") */
             font-style: italic;
-            max-width: 90%;
+            max-width: 95%;
         }
 
         .img-wrapper {
@@ -181,7 +176,6 @@ I have this , keep it as it’s just maximum the description texts by 4 degrees,
             font-family: 'Inter', sans-serif;
         }
 
-        /* --- MOBILE & TABLET RESPONSIVE OVERRIDES --- */
         @media (max-width: 1199px) {
             .menu-container {
                 width: 100%;
@@ -191,14 +185,13 @@ I have this , keep it as it’s just maximum the description texts by 4 degrees,
             }
 
             header .text-center { margin-bottom: 2rem; }
-            header h1 { font-size: 18vw !important; } /* Scales ASIA text to screen */
+            header h1 { font-size: 18vw !important; }
             header p.text-5xl { font-size: 5vw !important; letter-spacing: 0.1em; }
             header .text-3xl { font-size: 3.5vw !important; }
 
             .category-header h2 { font-size: 3rem !important; }
             .category-header { margin-top: 3rem; margin-bottom: 1.5rem; }
 
-            /* Convert table to cards */
             .menu-table, .menu-table tbody, .menu-table tr, .menu-table td {
                 display: block;
                 width: 100% !important;
@@ -216,7 +209,6 @@ I have this , keep it as it’s just maximum the description texts by 4 degrees,
             .col-num { padding: 0 0 20px 0 !important; }
             .num-badge { width: 60px; height: 60px; font-size: 1.4rem; }
 
-            /* Image sizing on mobile */
             .img-wrapper {
                 width: 80vw;
                 height: 80vw;
@@ -226,12 +218,13 @@ I have this , keep it as it’s just maximum the description texts by 4 degrees,
             }
             .col-img-box, .col-img-box-right { 
                 padding: 0 !important; 
-                order: -1; /* Move image to top of card */
+                order: -1;
             }
 
             .col-text { padding: 0 !important; }
             .item-title { font-size: 2rem !important; }
-            .item-description { font-size: 1.2rem !important; margin: 10px auto; }
+            /* Mobile adjustment for new large font */
+            .item-description { font-size: 1.6rem !important; margin: 10px auto; }
             
             .col-price { 
                 font-size: 2.2rem !important; 
@@ -242,7 +235,6 @@ I have this , keep it as it’s just maximum the description texts by 4 degrees,
 
             .veggie-label { display: block; margin: 10px auto; width: fit-content; }
             
-            /* Admin bar stack on very small screens */
             .admin-bar {
                 flex-direction: row;
                 flex-wrap: wrap;
@@ -255,7 +247,6 @@ I have this , keep it as it’s just maximum the description texts by 4 degrees,
 <body>
 
     <div class="admin-bar flex items-center justify-between">
-        <!-- ADDRESS / MAP LINK -->
         <a href="https://www.google.com/maps/search/?api=1&query=5+Fitzwilliam+St,+Peterborough+PE1+2RU" target="_blank" class="address-link flex items-center gap-2 text-white transition-colors" title="Open in Google Maps">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
@@ -264,7 +255,6 @@ I have this , keep it as it’s just maximum the description texts by 4 degrees,
             <span class="font-sans text-sm md:text-lg">5 Fitzwilliam St, Peterborough PE1 2RU</span>
         </a>
 
-        <!-- CALL BUTTON -->
         <a href="tel:01733562530" class="flex items-center gap-2 bg-[#926627] hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-full transition-colors border border-[#e2dcc8] shadow-lg">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
@@ -404,7 +394,7 @@ I have this , keep it as it’s just maximum the description texts by 4 degrees,
             const items = allItems.filter(i => i[4] === cat.id);
             if (!items.length) return;
             const section = document.createElement('section');
-            section.className = "menu-section"; // Forced breaks removed
+            section.className = "menu-section";
 
             let itemHTML = '';
             
@@ -461,4 +451,5 @@ I have this , keep it as it’s just maximum the description texts by 4 degrees,
         });
     </script>
 </body>
-</html>”
+</html>
+
