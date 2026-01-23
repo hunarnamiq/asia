@@ -63,30 +63,14 @@
             background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
         }
 
-        @media print {
-            .admin-bar { display: none !important; }
-            body { background: white; }
-            .menu-container { 
-                box-shadow: none; 
-                margin: 0; 
-                width: 100%; 
-                max-width: 100%; 
-                padding: 40px 60px; 
-                border: none; 
-            }
-            .menu-container::before { display: none; }
-            .page-break-section {
-                page-break-before: auto !important;
-                break-before: auto !important;
-            }
-        }
-
         .category-header {
             border-bottom: 4px double var(--brand-gold);
             margin-top: 6rem;
             margin-bottom: 3rem;
             padding-bottom: 1.5rem;
             text-align: center;
+            page-break-after: avoid;
+            break-after: avoid;
         }
 
         .menu-table { 
@@ -101,6 +85,12 @@
             padding: 40px 0; 
             vertical-align: middle; 
             border-bottom: 1px solid var(--border-soft); 
+        }
+
+        /* Prevent rows from breaking internally */
+        tr { 
+            page-break-inside: avoid; 
+            break-inside: avoid; 
         }
 
         .col-num { width: 1%; white-space: nowrap; padding-right: 35px !important; }
@@ -148,7 +138,6 @@
             letter-spacing: 1px;
         }
 
-        /* UPDATED: Increased font size by 55%, made bold and pure black */
         .item-description { 
             font-size: 2.8rem; 
             line-height: 1.4; 
@@ -174,6 +163,40 @@
             align-items: center; justify-content: center; background: #ece8db;
             color: #8b8678; text-align: center; font-size: 1rem;
             font-family: 'Inter', sans-serif;
+        }
+
+        @media print {
+            .admin-bar { display: none !important; }
+            body { background: white; -webkit-print-color-adjust: exact; }
+            .menu-container { 
+                box-shadow: none; 
+                margin: 0; 
+                width: 100%; 
+                max-width: 100%; 
+                padding: 40px 60px; 
+                border: none; 
+            }
+            .menu-container::before { display: none; }
+            
+            /* Explicit Page Break Class */
+            .print-break {
+                page-break-before: always !important;
+                break-before: page !important;
+                display: block;
+                height: 0;
+                margin: 0;
+            }
+
+            .category-header {
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+            
+            /* Ensure section starts clean if forced */
+            .force-page-start {
+                page-break-before: always !important;
+                break-before: page !important;
+            }
         }
 
         @media (max-width: 1199px) {
@@ -382,6 +405,29 @@
             { id: 'deals', title: 'Group Deals & Platters' }
         ];
 
+        // Break Points logic:
+        // Page 1: 1-6. Break before 7.
+        // Page 2-4: 7-26 (20 items). Break at 14 (+7), 21 (+7), 27 (Start Pg 5).
+        // Page 5-6: 27-36 (10 items). Break at 32 (+5), 37 (Start Pg 7).
+        // Page 7-8: 37-48 (12 items). Break at 43 (+6), 49 (Start Pg 9).
+        // Remaining: 6 per page. 55, 61, 67, 73, 79, 85...
+        const breakPoints = new Set([
+            7,  // Start Page 2
+            14, // Start Page 3 (7 items on pg2)
+            21, // Start Page 4 (7 items on pg3)
+            27, // Start Page 5 (6 items on pg4 - End of 'Pages 2-4' block)
+            32, // Start Page 6 (5 items on pg5)
+            37, // Start Page 7 (5 items on pg6 - End of 'Pages 5-6' block)
+            43, // Start Page 8 (6 items on pg7)
+            49, // Start Page 9 (6 items on pg8 - End of 'Pages 7-8' block)
+            55, // Start Page 10 (6 items)
+            61, // Start Page 11 (6 items)
+            67, // Start Page 12 (6 items)
+            73, // Start Page 13 (6 items)
+            79, // Start Page 14 (6 items)
+            85  // Start Page 15 (6 items)
+        ]);
+
         const container = document.getElementById('menu-content');
 
         const getSafeFilename = (name) => {
@@ -389,65 +435,104 @@
         };
 
         let globalIdx = 0;
+        
         categories.forEach(cat => {
             const items = allItems.filter(i => i[4] === cat.id);
             if (!items.length) return;
+
             const section = document.createElement('section');
             section.className = "menu-section";
-
-            let itemHTML = '';
             
-            items.forEach(item => {
+            // Check if the FIRST item of this category is a break point
+            const firstItemNum = items[0][0];
+            if (breakPoints.has(firstItemNum)) {
+                section.classList.add('force-page-start');
+            }
+
+            // Create Header
+            const headerDiv = document.createElement('div');
+            headerDiv.className = "category-header";
+            headerDiv.innerHTML = `<h2 class="text-7xl font-black uppercase tracking-tight text-gray-800">${cat.title}</h2>`;
+            section.appendChild(headerDiv);
+
+            // Start initial table
+            let currentTable = document.createElement('table');
+            currentTable.className = "menu-table";
+            let currentTbody = document.createElement('tbody');
+            currentTable.appendChild(currentTbody);
+            section.appendChild(currentTable);
+
+            items.forEach((item, index) => {
                 const idNum = item[0];
+
+                // Check for mid-category break point (but skip if it was the very first item, handled by section class)
+                if (index > 0 && breakPoints.has(idNum)) {
+                    // 1. Close current table logic (already appended to section)
+                    
+                    // 2. Insert Break
+                    const breakDiv = document.createElement('div');
+                    breakDiv.className = "print-break";
+                    section.appendChild(breakDiv);
+
+                    // 3. Start new table
+                    currentTable = document.createElement('table');
+                    currentTable.className = "menu-table";
+                    currentTbody = document.createElement('tbody');
+                    currentTable.appendChild(currentTbody);
+                    section.appendChild(currentTable);
+                }
+
+                // Generate Row content
                 const isEven = (globalIdx % 2 === 0);
                 const isVeg = item[1].includes('(V)');
                 const cleanT = item[1].replace('(V)', '').trim();
                 const filename = getSafeFilename(item[1]);
                 
+                let rowHtml = '';
+
                 if (isEven) {
-                    itemHTML += `
-                        <tr class="menu-row">
-                            <td class="col-num"><span class="num-badge ${isVeg?'num-badge-veggie':''}">${idNum}</span></td>
-                            <td class="col-img-box">
-                                <div class="img-wrapper style-square">
-                                    <div class="placeholder-box" id="placeholder-${idNum}">PREPARING<br>${filename}</div>
-                                    <img id="img-${idNum}" class="item-img" src="${filename}" onload="document.getElementById('placeholder-${idNum}').style.display='none'">
-                                </div>
-                            </td>
-                            <td class="col-text">
-                                <span class="item-title">${cleanT} ${isVeg?'<span class="veggie-label">Vegetarian</span>':''}</span>
-                                <p class="item-description">${item[2]}</p>
-                            </td>
-                            <td class="col-price">${item[3]}</td>
-                        </tr>
+                    rowHtml = `
+                        <td class="col-num"><span class="num-badge ${isVeg?'num-badge-veggie':''}">${idNum}</span></td>
+                        <td class="col-img-box">
+                            <div class="img-wrapper style-square">
+                                <div class="placeholder-box" id="placeholder-${idNum}">PREPARING<br>${filename}</div>
+                                <img id="img-${idNum}" class="item-img" src="${filename}" onload="document.getElementById('placeholder-${idNum}').style.display='none'">
+                            </div>
+                        </td>
+                        <td class="col-text">
+                            <span class="item-title">${cleanT} ${isVeg?'<span class="veggie-label">Vegetarian</span>':''}</span>
+                            <p class="item-description">${item[2]}</p>
+                        </td>
+                        <td class="col-price">${item[3]}</td>
                     `;
                 } else {
-                    itemHTML += `
-                        <tr class="menu-row">
-                            <td class="col-num"><span class="num-badge ${isVeg?'num-badge-veggie':''}">${idNum}</span></td>
-                            <td class="col-text">
-                                <span class="item-title">${cleanT} ${isVeg?'<span class="veggie-label">Vegetarian</span>':''}</span>
-                                <p class="item-description">${item[2]}</p>
-                            </td>
-                            <td class="col-price">${item[3]}</td>
-                            <td class="col-img-box-right">
-                                <div class="img-wrapper style-circle">
-                                    <div class="placeholder-box" id="placeholder-${idNum}">PREPARING<br>${filename}</div>
-                                    <img id="img-${idNum}" class="item-img" src="${filename}" onload="document.getElementById('placeholder-${idNum}').style.display='none'">
-                                </div>
-                            </td>
-                        </tr>
+                    rowHtml = `
+                        <td class="col-num"><span class="num-badge ${isVeg?'num-badge-veggie':''}">${idNum}</span></td>
+                        <td class="col-text">
+                            <span class="item-title">${cleanT} ${isVeg?'<span class="veggie-label">Vegetarian</span>':''}</span>
+                            <p class="item-description">${item[2]}</p>
+                        </td>
+                        <td class="col-price">${item[3]}</td>
+                        <td class="col-img-box-right">
+                            <div class="img-wrapper style-circle">
+                                <div class="placeholder-box" id="placeholder-${idNum}">PREPARING<br>${filename}</div>
+                                <img id="img-${idNum}" class="item-img" src="${filename}" onload="document.getElementById('placeholder-${idNum}').style.display='none'">
+                            </div>
+                        </td>
                     `;
                 }
+                
+                const tr = document.createElement('tr');
+                tr.className = "menu-row";
+                tr.innerHTML = rowHtml;
+                currentTbody.appendChild(tr);
+
                 globalIdx++;
             });
 
-            section.innerHTML = `
-                <div class="category-header"><h2 class="text-7xl font-black uppercase tracking-tight text-gray-800">${cat.title}</h2></div>
-                <table class="menu-table"><tbody>${itemHTML}</tbody></table>
-            `;
             container.appendChild(section);
         });
     </script>
 </body>
 </html>
+
