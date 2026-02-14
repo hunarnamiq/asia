@@ -44,7 +44,7 @@
 
         .menu-container {
             width: 95%;
-            max-width: 2200px;
+            max-width: 2400px;
             margin: 40px auto;
             background: var(--bg-cream);
             padding: 80px 100px;
@@ -82,12 +82,11 @@
         }
         
         .menu-table td { 
-            padding: 40px 0; 
+            padding: 60px 0; 
             vertical-align: middle; 
             border-bottom: 1px solid var(--border-soft); 
         }
 
-        /* Prevent rows from breaking internally */
         tr { 
             page-break-inside: avoid; 
             break-inside: avoid; 
@@ -100,7 +99,7 @@
         .col-price { 
             width: 1%; 
             white-space: nowrap; 
-            font-size: 3rem; 
+            font-size: 3.5rem; 
             font-weight: 700; 
             font-family: 'Playfair Display', serif;
             color: var(--brand-gold); 
@@ -120,7 +119,7 @@
         .num-badge-veggie { background-color: var(--brand-veggie); border-color: #8dbd86; }
 
         .item-title {
-            font-size: 2.8rem;
+            font-size: 3.2rem;
             font-weight: 700; 
             color: #111; 
             line-height: 1.2;
@@ -148,20 +147,21 @@
             max-width: 95%;
         }
 
+        /* MAXIMIZED IMAGES: Increased by 200% (from 380px to 760px) */
         .img-wrapper {
-            width: 380px; height: 380px; 
+            width: 760px; height: 760px; 
             overflow: hidden; background: #fff; position: relative;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.18);
         }
-        .style-square { border-radius: 8px; border: 1px solid var(--border-soft); }
-        .style-circle { border-radius: 50%; border: 8px solid #fff; outline: 1px solid var(--border-soft); }
+        .style-square { border-radius: 12px; border: 1px solid var(--border-soft); }
+        .style-circle { border-radius: 50%; border: 12px solid #fff; outline: 1px solid var(--border-soft); }
 
         .item-img { width: 100%; height: 100%; object-fit: cover; }
 
         .placeholder-box {
             position: absolute; inset: 0; display: flex; flex-direction: column;
             align-items: center; justify-content: center; background: #ece8db;
-            color: #8b8678; text-align: center; font-size: 1rem;
+            color: #8b8678; text-align: center; font-size: 1.5rem;
             font-family: 'Inter', sans-serif;
         }
 
@@ -177,8 +177,6 @@
                 border: none; 
             }
             .menu-container::before { display: none; }
-            
-            /* Explicit Page Break Class */
             .print-break {
                 page-break-before: always !important;
                 break-before: page !important;
@@ -186,13 +184,10 @@
                 height: 0;
                 margin: 0;
             }
-
             .category-header {
                 page-break-after: avoid;
                 break-after: avoid;
             }
-            
-            /* Ensure section starts clean if forced */
             .force-page-start {
                 page-break-before: always !important;
                 break-before: page !important;
@@ -232,11 +227,12 @@
             .col-num { padding: 0 0 20px 0 !important; }
             .num-badge { width: 60px; height: 60px; font-size: 1.4rem; }
 
+            /* Mobile maximized scale */
             .img-wrapper {
-                width: 80vw;
-                height: 80vw;
-                max-width: 400px;
-                max-height: 400px;
+                width: 90vw;
+                height: 90vw;
+                max-width: 800px;
+                max-height: 800px;
                 margin: 0 auto 30px;
             }
             .col-img-box, .col-img-box-right { 
@@ -245,11 +241,11 @@
             }
 
             .col-text { padding: 0 !important; }
-            .item-title { font-size: 2rem !important; }
+            .item-title { font-size: 2.2rem !important; }
             .item-description { font-size: 1.8rem !important; margin: 10px auto; }
             
             .col-price { 
-                font-size: 2.2rem !important; 
+                font-size: 2.5rem !important; 
                 padding: 15px 0 0 0 !important; 
                 display: block;
                 width: 100%;
@@ -405,27 +401,8 @@
             { id: 'deals', title: 'Group Deals & Platters' }
         ];
 
-        // Break Points logic:
-        // Page 1: 1-6. Break before 7.
-        // Page 2-4: 7-26 (20 items). Break at 14 (+7), 21 (+7), 27 (Start Pg 5).
-        // Page 5-6: 27-36 (10 items). Break at 32 (+5), 37 (Start Pg 7).
-        // Page 7-8: 37-48 (12 items). Break at 43 (+6), 49 (Start Pg 9).
-        // Remaining: 6 per page. 55, 61, 67, 73, 79, 85...
         const breakPoints = new Set([
-            7,  // Start Page 2
-            14, // Start Page 3 (7 items on pg2)
-            21, // Start Page 4 (7 items on pg3)
-            27, // Start Page 5 (6 items on pg4 - End of 'Pages 2-4' block)
-            32, // Start Page 6 (5 items on pg5)
-            37, // Start Page 7 (5 items on pg6 - End of 'Pages 5-6' block)
-            43, // Start Page 8 (6 items on pg7)
-            49, // Start Page 9 (6 items on pg8 - End of 'Pages 7-8' block)
-            55, // Start Page 10 (6 items)
-            61, // Start Page 11 (6 items)
-            67, // Start Page 12 (6 items)
-            73, // Start Page 13 (6 items)
-            79, // Start Page 14 (6 items)
-            85  // Start Page 15 (6 items)
+            7, 14, 21, 27, 32, 37, 43, 49, 55, 61, 67, 73, 79, 85
         ]);
 
         const container = document.getElementById('menu-content');
@@ -443,19 +420,16 @@
             const section = document.createElement('section');
             section.className = "menu-section";
             
-            // Check if the FIRST item of this category is a break point
             const firstItemNum = items[0][0];
             if (breakPoints.has(firstItemNum)) {
                 section.classList.add('force-page-start');
             }
 
-            // Create Header
             const headerDiv = document.createElement('div');
             headerDiv.className = "category-header";
             headerDiv.innerHTML = `<h2 class="text-7xl font-black uppercase tracking-tight text-gray-800">${cat.title}</h2>`;
             section.appendChild(headerDiv);
 
-            // Start initial table
             let currentTable = document.createElement('table');
             currentTable.className = "menu-table";
             let currentTbody = document.createElement('tbody');
@@ -465,16 +439,11 @@
             items.forEach((item, index) => {
                 const idNum = item[0];
 
-                // Check for mid-category break point (but skip if it was the very first item, handled by section class)
                 if (index > 0 && breakPoints.has(idNum)) {
-                    // 1. Close current table logic (already appended to section)
-                    
-                    // 2. Insert Break
                     const breakDiv = document.createElement('div');
                     breakDiv.className = "print-break";
                     section.appendChild(breakDiv);
 
-                    // 3. Start new table
                     currentTable = document.createElement('table');
                     currentTable.className = "menu-table";
                     currentTbody = document.createElement('tbody');
@@ -482,7 +451,6 @@
                     section.appendChild(currentTable);
                 }
 
-                // Generate Row content
                 const isEven = (globalIdx % 2 === 0);
                 const isVeg = item[1].includes('(V)');
                 const cleanT = item[1].replace('(V)', '').trim();
@@ -535,4 +503,3 @@
     </script>
 </body>
 </html>
-
