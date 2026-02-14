@@ -83,7 +83,7 @@
         
         .menu-table td { 
             padding: 60px 0; 
-            vertical-align: middle; 
+            vertical-align: top; /* Changed to top for better alignment with description */
             border-bottom: 1px solid var(--border-soft); 
         }
 
@@ -92,21 +92,31 @@
             break-inside: avoid; 
         }
 
-        .col-num { width: 1%; white-space: nowrap; padding-right: 35px !important; }
+        .col-num { width: 1%; white-space: nowrap; padding-right: 35px !important; vertical-align: top !important; padding-top: 65px !important; }
         .col-img-box { width: 1%; white-space: nowrap; padding-right: 60px !important; }
         .col-img-box-right { width: 1%; white-space: nowrap; padding-left: 60px !important; }
         
-        .col-price { 
-            width: 1%; 
+        .col-text { width: auto; text-align: left; }
+
+        /* New Flex container for Title and Price */
+        .title-row {
+            display: flex;
+            justify-content: space-between; /* This pushes price to the right */
+            align-items: baseline;
+            width: 100%;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px dotted #e2dcc8; /* Optional guide line, subtle */
+        }
+
+        .inline-price { 
             white-space: nowrap; 
             font-size: 3.5rem; 
             font-weight: 700; 
             font-family: 'Playfair Display', serif;
             color: var(--brand-gold); 
-            padding: 0 50px !important;
+            padding-left: 40px; /* The "space" requested */
+            flex-shrink: 0;
         }
-
-        .col-text { width: auto; text-align: left; }
 
         .num-badge {
             display: inline-flex; align-items: center; justify-content: center;
@@ -122,7 +132,7 @@
             font-size: 3.2rem;
             font-weight: 700; 
             color: #111; 
-            line-height: 1.2;
+            line-height: 1;
             display: block;
             font-family: 'Playfair Display', serif;
         }
@@ -241,14 +251,25 @@
             }
 
             .col-text { padding: 0 !important; }
-            .item-title { font-size: 2.2rem !important; }
-            .item-description { font-size: 1.8rem !important; margin: 10px auto; }
             
-            .col-price { 
+            /* Mobile Flex adjustment for title/price */
+            .title-row {
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                border: none;
+                margin-bottom: 10px;
+            }
+
+            .item-title { font-size: 2.2rem !important; text-align: center; }
+            .item-description { font-size: 1.8rem !important; margin: 10px auto; text-align: center; }
+            
+            .inline-price { 
                 font-size: 2.5rem !important; 
-                padding: 15px 0 0 0 !important; 
+                padding: 10px 0 0 0 !important; 
                 display: block;
                 width: 100%;
+                text-align: center;
             }
 
             .veggie-label { display: block; margin: 10px auto; width: fit-content; }
@@ -458,36 +479,42 @@
                 
                 let rowHtml = '';
 
+                // HTML chunks for reuse
+                const numHtml = `<td class="col-num"><span class="num-badge ${isVeg?'num-badge-veggie':''}">${idNum}</span></td>`;
+                
+                // Modified Title Block containing Price
+                const textHtml = `
+                    <td class="col-text">
+                        <div class="title-row">
+                            <span class="item-title">${cleanT} ${isVeg?'<span class="veggie-label">Vegetarian</span>':''}</span>
+                            <span class="inline-price">${item[3]}</span>
+                        </div>
+                        <p class="item-description">${item[2]}</p>
+                    </td>
+                `;
+
+                const imgHtmlLeft = `
+                    <td class="col-img-box">
+                        <div class="img-wrapper style-square">
+                            <div class="placeholder-box" id="placeholder-${idNum}">PREPARING<br>${filename}</div>
+                            <img id="img-${idNum}" class="item-img" src="${filename}" onload="document.getElementById('placeholder-${idNum}').style.display='none'">
+                        </div>
+                    </td>
+                `;
+
+                const imgHtmlRight = `
+                    <td class="col-img-box-right">
+                        <div class="img-wrapper style-circle">
+                            <div class="placeholder-box" id="placeholder-${idNum}">PREPARING<br>${filename}</div>
+                            <img id="img-${idNum}" class="item-img" src="${filename}" onload="document.getElementById('placeholder-${idNum}').style.display='none'">
+                        </div>
+                    </td>
+                `;
+
                 if (isEven) {
-                    rowHtml = `
-                        <td class="col-num"><span class="num-badge ${isVeg?'num-badge-veggie':''}">${idNum}</span></td>
-                        <td class="col-img-box">
-                            <div class="img-wrapper style-square">
-                                <div class="placeholder-box" id="placeholder-${idNum}">PREPARING<br>${filename}</div>
-                                <img id="img-${idNum}" class="item-img" src="${filename}" onload="document.getElementById('placeholder-${idNum}').style.display='none'">
-                            </div>
-                        </td>
-                        <td class="col-text">
-                            <span class="item-title">${cleanT} ${isVeg?'<span class="veggie-label">Vegetarian</span>':''}</span>
-                            <p class="item-description">${item[2]}</p>
-                        </td>
-                        <td class="col-price">${item[3]}</td>
-                    `;
+                    rowHtml = numHtml + imgHtmlLeft + textHtml;
                 } else {
-                    rowHtml = `
-                        <td class="col-num"><span class="num-badge ${isVeg?'num-badge-veggie':''}">${idNum}</span></td>
-                        <td class="col-text">
-                            <span class="item-title">${cleanT} ${isVeg?'<span class="veggie-label">Vegetarian</span>':''}</span>
-                            <p class="item-description">${item[2]}</p>
-                        </td>
-                        <td class="col-price">${item[3]}</td>
-                        <td class="col-img-box-right">
-                            <div class="img-wrapper style-circle">
-                                <div class="placeholder-box" id="placeholder-${idNum}">PREPARING<br>${filename}</div>
-                                <img id="img-${idNum}" class="item-img" src="${filename}" onload="document.getElementById('placeholder-${idNum}').style.display='none'">
-                            </div>
-                        </td>
-                    `;
+                    rowHtml = numHtml + textHtml + imgHtmlRight;
                 }
                 
                 const tr = document.createElement('tr');
