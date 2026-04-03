@@ -319,6 +319,7 @@
     </div>
 
     <script type="module">
+        // Added the 6th array element to handle custom image names for the new items
         const allItems = [
             [1, "Lamb On The Bone", "Tender pieces of lamb, slow-cooked in special sauce and herbs. Served with Stew, Salad, Rice & Naan Bread", "£11.89", "lamb"],
             [2, "Lamb On Bone (Large)", "Large tender pieces of lamb, slow-cooked in special sauce. Served with Stew, Salad, Rice & Naan Bread", "£14.49", "lamb"],
@@ -326,86 +327,103 @@
             [4, "Tashreeb", "Naan soaked in okra and lamb stew.", "£9.99", "lamb"],
             [5, "Lamb Loin Chops", "BBQ Lamb back loin, marinated with herbs.", "£19.99", "lamb"],
             [6, "Lamb Chopped (Poached)", "BBQ Poached in a lightly spiced vegetable stock.", "£18.49", "lamb"],
-            [7, "1/4 Chicken ", "Oven-roasted quarter chicken. Served with stews, salad, rice, and naan.", "£8.99", "poultry"],
-            [8, "1/2 Chicken With Rice ", "Oven-roasted half chicken. Served with stews, salad, rice, and naan.", "£11.49", "poultry"],
-            [9, "1/2 Chicken with Salad", "Oven-roasted half chicken with salad and naan OR chips.", "£6.99", "poultry"],
-            [10, "Mixed Lamb, Chicken And Rice", "Piece of lamb on bone and quarter chicken, oven-roasted.", "£14.89", "poultry"],
-            [11, "Biryani", "Fragrant rice with tender pieces of chicken and lamb.", "£10.99", "poultry"],
-            [12, "Chicken Shawarma", "Roasted boneless chicken, marinated with lemon and garlic.", "£9.49", "shawarma"],
-            [13, "Beef Shawarma", "Roasted boneless beef, marinated with lemon and onion.", "£11.99", "shawarma"],
-            [14, "Mixed Shawarma", "Combination of roasted beef and chicken shawarma.", "£11.99", "shawarma"],
-            [15, "Chicken Shawarma & Lamb Shish", "Chicken shawarma paired with lamb cubes.", "£12.49", "shawarma"],
-            [16, "Chicken Shawarma & Chicken Shish", "Chicken shawarma paired with chicken cubes.", "£10.89", "shawarma"],
-            [17, "Chicken Shawarma & Lamb Kafta", "Chicken shawarma paired with minced lamb.", "£11.99", "shawarma"],
-            [18, "Chicken Shawarma & Wings", "Chicken shawarma served with chicken wings.", "£9.99", "shawarma"],
-            [19, "Beef Shawarma & Lamb Shish", "Beef shawarma paired with lamb cubes.", "£12.89", "shawarma"],
-            [20, "Beef Shawarma & Chicken Shish", "Beef shawarma paired with chicken cubes.", "£12.49", "shawarma"],
-            [21, "Beef Shawarma & Lamb Kafta", "Beef shawarma paired with minced lamb.", "£12.99", "shawarma"],
-            [22, "Beef Shawarma & Wings", "Beef shawarma served with chicken wings.", "£11.49", "shawarma"],
-            [23, "Mixed Shawarma & Lamb Shish", "Beef and chicken shawarma with lamb cubes.", "£14.49", "shawarma"],
-            [24, "Mixed Shawarma & Chicken Shish & Lamb Shish", "Beef, chicken shawarma with chicken and Lamb cubes.", "£19.99", "shawarma"],
-            [25, "Mixed Shawarma & Lamb Kafta", "Beef and chicken shawarma with minced Kebab.", "£12.99", "shawarma"],
-            [26, "Mixed Shawarma & Wings", "Beef and chicken shawarma with chicken wings.", "£12.49", "shawarma"],
-            [27, "Chicken Shawarma Wrap", "Wrapped in naan with salad and sauce.", "£4.99", "wraps"],
-            [28, "Chicken Arabic Sandwich", "Chicken shawarma in Lebanese naan with salad and chips.", "£7.99", "wraps"],
-            [29, "Lamb Arabic Sandwich", "Lamb shawarma in Lebanese naan with salad and chips.", "£8.89", "wraps"],
-            [30, "Lamb Shawarma Wrap", "Lamb Shawarma Wrapped in naan with salad and sauce.", "£5.99", "wraps"],
-            [31, "Chicken Shish Wrap", "Chicken skewerd Wrapped in naan with salad and sauce.", "£5.89", "wraps"],
-            [32, "Lamb Shish Wrap", "Wrapped in naan with salad and sauce.", "£6.49", "wraps"],
-            [33, "Lamb Kafta Wrap", "minced Kaftra Wrapped in naan with salad and sauce.ADANA", "£5.99", "wraps"],
-            [34, "Mixed Shawarma Wrap", "Chicken and Lamb Shawarma Wrapped in naan with salad and sauce.", "£6.49", "wraps"],
-            [35, "Falafel Wrap (V)", "Wrapped in naan with salad and sauce.", "£4.99", "wraps"],
-            [36, "Vegetarian Wrap (V)", "Aubergine and potatoes wrapped in naan.", "£4.49", "wraps"],
-            [37, "Asia Mixed Kebab Special", "Platter of Lamb Kafta, Chicken Shish, Lamb Shish, and Wings with Naan and salad.", "£18.99", "grills"],
-            [38, "Chicken Shish", "Skewered cubes of grilled chicken breast with Naan and salad.", "£9.99", "grills"],
-            [39, "Lamb Shish", "Cubes of grilled lamb marinated in special herbs with Naan and salad.", "£12.89", "grills"],
-            [40, "Lamb Kafta Kebab", "Seasoned minced lamb with seasonal herbswith Naan and salad.", "£11.99", "grills"],
-            [41, "Chicken Wings", "Marinated with lemon, garlic, and herbs with Naan and salad.", "£8.99", "grills"],
-            [42, "Lamb Kafta & Chicken Shish", "Minced lamb skewers paired with chicken cubeswith Naan and salad .", "£11.99", "grills"],
-            [43, "Lamb Kafta & Wings", "Minced lamb skewers paired with chicken wings with Naan and salad.", "£11.49", "grills"],
-            [44, "Lamb Kafta & Drumsticks", "Minced lamb and Chicken Drumsticks with Naan and salad.", "£11.49", "grills"],
-            [45, "Lamb & Chicken Shish", "Juicy lamb cubes paired with chicken breast cubes with Naan and salad.", "£12.49", "grills"],
-            [46, "Lamb Shish & Kafta", "Grilled lamb cubes with seasoned minced lamb with Naan and salad.", "£12.49", "grills"],
-            [47, "Lamb Shish & Wings", "Grilled lamb cubes with flame-grilled chicken wings with Naan and salad.", "£11.99", "grills"],
-            [48, "Lamb Chops", "Charcoal-grilled, marinated with black pepper and herbs with Naan and salad.", "£14.99", "grills"],
-            [49, "Kurdish Kafta", "Couscous filled with lamb in tomato sauce (Fridays Only).", "£10.99", "specials"],
-            [50, "Seabass", "Char-grilled whole sea bass, seasoned with spices.", "£14.99", "specials"],
-            [51, "Patcha", "Boiled lamb-head and feet in special sauce.", "£12.99", "specials"],
-            [52, "Dolma", "Stuffed grape leaves/vegetables (Sundays Only).", "£11.99", "specials"],
-            [53, "Aubergine Stew (V)", "Aubergine, green pepper, and potatoes stew.", "£2.49", "stews"],
-            [54, "Okra Stew (V)", "Okra cooked in rich tomato sauce.", "£2.49", "stews"],
-            [55, "Kidney Beans Stew (V)", "Beans cooked in rich tomato sauce.", "£2.49", "stews"],
-            [56, "Potato Stew (V)", "Potatoes in tomato sauce with herbs.", "£2.49", "stews"],
-            [57, "Apricots In Sauce (V)", "Sweet apricots in special sauce.", "£2.49", "stews"],
-            [58, "Courgette Stew (V)", "Courgettes in tomato sauce.", "£2.49", "stews"],
-            [59, "Black-Eyed Peas (V)", "Peas in tomato sauce and garlic.", "£2.49", "stews"],
-            [60, "Keema", "Minced meat in tomato sauce.", "£2.99", "stews"],
-            [61, "Green Beans (V)", "Fresh green beans in sauce.", "£2.49", "stews"],
-            [62, "Spinach (V)", "Cooked spinach with garlic and herbs.", "£2.49", "stews"],
-            [63, "Chicken Curry", "Chicken curry with potatoes.", "£3.99", "stews"],
-            [64, "Vegetarian Stew (V)", "Stew of the day. Served with rice and naan.", "£5.99", "stews"],
-            [65, "Chickpeas (V)", "Chickpeas.", "£1.99", "stews"],
-            [66, "Lentil Soup (V)", "Hearty blended lentil soup.", "£1.99", "stews"],
-            [67, "Falafel (V)", "Deep-fried ground chickpeas and garlic.", "£8.99", "stews"],
-            [68, "Plate Of Salad (V)", "Fresh seasonal salad.", "£3.99", "stews"],
-            [69, "Bread (V)", "Fresh naan bread.", "£1.99", "basics"],
-            [70, "Rice (V)", "White or yellow rice.", "£1.99", "basics"],
-            [71, "Side: Chips (V)", "Large portion of chips.", "£2.99", "basics"],
-            [72, "Soft Drinks (Can)", "Various canned soda.", "£0.99", "extras"],
-            [73, "Soft Drinks (1.5L)", "Large bottle of soda.", "£2.99", "extras"],
-            [74, "Fresh Juice", "Orange, Apple, or Carrot juice.", "£2.49", "extras"],
-            [75, "Baklava", "Traditional sweet pastry (per piece).", "£0.99", "extras"],
-            [76, "Ice Cream", "Ben & Jerry's Ice Cream.", "£5.99", "extras"],
-            [77, "Kids: Nuggets", "4 Piece Chicken Nuggets and Chips.", "£3.99", "kids"],
-            [78, "Kids: Chicken Shish", "Chicken Shish and Chips.", "£4.99", "kids"],
-            [79, "Kids: Beefburger", "Beefburger and Chips.", "£4.99", "kids"],
-            [80, "Kids: Falafel (V)", "Falafel and Chips.", "£4.99", "kids"],
-            [81, "Deal For 2 (A)", "1/2 Chicken, Lamb, sides, rice, naans.", "£25.99", "deals"],
-            [82, "Deal For 2 (B)", "Mixed Shawarma, Half Chicken, Two PC Lamb, sides, rice.", "£31.99", "deals"],
-            [83, "Deal For 3 (A)", "Mixed Grill, Lamb Shish, Chicken Shish, Chicken Wings, Shish Kebab, Beef Donner, Chicken Donner, 3 Different Sides, Rice, Chips And Bottle Of Coke.", "£34.99", "deals"],
-            [84, "Deal For 4 (Standard)", "Beef Donner, Chicken Donner, 2 Shish Kebab, 2 Chicken Tikka, 2 Lamb Tikka, 4 Naan Bread, Salad, 1 White Rice, 1 Chips, Bottle of coke", "£47.99", "deals"],
-            [85, "Deal For 4 (Family)", "Kofte Kebab, Lamb Shish, Lamb Skewers, Chicken Skewers, Chicken Wings, Lamb Chops, Chips, Rice And Bottle Of Coke.", "£48.99", "deals"],
-            [86, "Deal For 4 or 5", "Fully Loaded Large platter with Chops, Wings, Shawarma, Shish.", "£64.99", "deals"]
+            [7, "Lamb In Tomato Stock", "Lamb in tomato stock/soup. Served with rice, side dishes and naan bread.", "£13.99", "lamb", "891.png"], // NEW ITEM
+
+            [8, "1/4 Chicken ", "Oven-roasted quarter chicken. Served with stews, salad, rice, and naan.", "£8.99", "poultry"],
+            [9, "1/2 Chicken With Rice ", "Oven-roasted half chicken. Served with stews, salad, rice, and naan.", "£11.49", "poultry"],
+            [10, "1/2 Chicken with Salad", "Oven-roasted half chicken with salad and naan OR chips.", "£6.99", "poultry"],
+            [11, "Mixed Lamb, Chicken And Rice", "Piece of lamb on bone and quarter chicken, oven-roasted.", "£14.89", "poultry"],
+            [12, "Biryani", "Fragrant rice with tender pieces of chicken and lamb.", "£10.99", "poultry"],
+
+            [13, "Chicken Shawarma", "Roasted boneless chicken, marinated with lemon and garlic.", "£9.49", "shawarma"],
+            [14, "Beef Shawarma", "Roasted boneless beef, marinated with lemon and onion.", "£11.99", "shawarma"],
+            [15, "Mixed Shawarma", "Combination of roasted beef and chicken shawarma.", "£11.99", "shawarma"],
+            [16, "Chicken Shawarma & Lamb Shish", "Chicken shawarma paired with lamb cubes.", "£12.49", "shawarma"],
+            [17, "Chicken Shawarma & Chicken Shish", "Chicken shawarma paired with chicken cubes.", "£10.89", "shawarma"],
+            [18, "Chicken Shawarma & Lamb Kafta", "Chicken shawarma paired with minced lamb.", "£11.99", "shawarma"],
+            [19, "Chicken Shawarma & Wings", "Chicken shawarma served with chicken wings.", "£9.99", "shawarma"],
+            [20, "Beef Shawarma & Lamb Shish", "Beef shawarma paired with lamb cubes.", "£12.89", "shawarma"],
+            [21, "Beef Shawarma & Chicken Shish", "Beef shawarma paired with chicken cubes.", "£12.49", "shawarma"],
+            [22, "Beef Shawarma & Lamb Kafta", "Beef shawarma paired with minced lamb.", "£12.99", "shawarma"],
+            [23, "Beef Shawarma & Wings", "Beef shawarma served with chicken wings.", "£11.49", "shawarma"],
+            [24, "Mixed Shawarma & Lamb Shish", "Beef and chicken shawarma with lamb cubes.", "£14.49", "shawarma"],
+            [25, "Mixed Shawarma & Chicken Shish & Lamb Shish", "Beef, chicken shawarma with chicken and Lamb cubes.", "£19.99", "shawarma"],
+            [26, "Mixed Shawarma & Lamb Kafta", "Beef and chicken shawarma with minced Kebab.", "£12.99", "shawarma"],
+            [27, "Mixed Shawarma & Wings", "Beef and chicken shawarma with chicken wings.", "£12.49", "shawarma"],
+            [28, "Mixed Shawarma With Rice", "Mixed shawarma served with rice, side dishes and naan bread.", "£10.99", "shawarma", "888.png"], // NEW ITEM
+            [29, "Chicken Shawarma With Rice", "Chicken shawarma served with rice, side dishes and naan bread.", "£9.99", "shawarma", "889.png"], // NEW ITEM
+            [30, "Beef Shawarma With Rice", "Beef shawarma served with rice, side dishes and naan bread.", "£11.49", "shawarma", "890.png"], // NEW ITEM
+
+            [31, "Chicken Shawarma Wrap", "Wrapped in naan with salad and sauce.", "£4.99", "wraps"],
+            [32, "Chicken Arabic Sandwich", "Chicken shawarma in Lebanese naan with salad and chips.", "£7.99", "wraps"],
+            [33, "Lamb Arabic Sandwich", "Lamb shawarma in Lebanese naan with salad and chips.", "£8.89", "wraps"],
+            [34, "Lamb Shawarma Wrap", "Lamb Shawarma Wrapped in naan with salad and sauce.", "£5.99", "wraps"],
+            [35, "Chicken Shish Wrap", "Chicken skewerd Wrapped in naan with salad and sauce.", "£5.89", "wraps"],
+            [36, "Lamb Shish Wrap", "Wrapped in naan with salad and sauce.", "£6.49", "wraps"],
+            [37, "Lamb Kafta Wrap", "minced Kaftra Wrapped in naan with salad and sauce.ADANA", "£5.99", "wraps"],
+            [38, "Mixed Shawarma Wrap", "Chicken and Lamb Shawarma Wrapped in naan with salad and sauce.", "£6.49", "wraps"],
+            [39, "Falafel Wrap (V)", "Wrapped in naan with salad and sauce.", "£4.99", "wraps"],
+            [40, "Vegetarian Wrap (V)", "Aubergine and potatoes wrapped in naan.", "£4.49", "wraps"],
+
+            [41, "Asia Mixed Kebab Special", "Platter of Lamb Kafta, Chicken Shish, Lamb Shish, and Wings with Naan and salad.", "£18.99", "grills"],
+            [42, "Chicken Shish", "Skewered cubes of grilled chicken breast with Naan and salad.", "£9.99", "grills"],
+            [43, "Lamb Shish", "Cubes of grilled lamb marinated in special herbs with Naan and salad.", "£12.89", "grills"],
+            [44, "Lamb Kafta Kebab", "Seasoned minced lamb with seasonal herbswith Naan and salad.", "£11.99", "grills"],
+            [45, "Chicken Wings", "Marinated with lemon, garlic, and herbs with Naan and salad.", "£8.99", "grills"],
+            [46, "Lamb Kafta & Chicken Shish", "Minced lamb skewers paired with chicken cubeswith Naan and salad .", "£11.99", "grills"],
+            [47, "Lamb Kafta & Wings", "Minced lamb skewers paired with chicken wings with Naan and salad.", "£11.49", "grills"],
+            [48, "Lamb Kafta & Drumsticks", "Minced lamb and Chicken Drumsticks with Naan and salad.", "£11.49", "grills"],
+            [49, "Lamb & Chicken Shish", "Juicy lamb cubes paired with chicken breast cubes with Naan and salad.", "£12.49", "grills"],
+            [50, "Lamb Shish & Kafta", "Grilled lamb cubes with seasoned minced lamb with Naan and salad.", "£12.49", "grills"],
+            [51, "Lamb Shish & Wings", "Grilled lamb cubes with flame-grilled chicken wings with Naan and salad.", "£11.99", "grills"],
+            [52, "Lamb Chops", "Charcoal-grilled, marinated with black pepper and herbs with Naan and salad.", "£14.99", "grills"],
+            [53, "Chicken Shish With Rice", "Skewered cubes of grilled chicken breast served with rice.", "£9.99", "grills", "892.png"], // NEW ITEM
+            [54, "Lamb Shish With Rice", "Cubes of grilled lamb marinated in special herbs served with rice.", "£11.49", "grills", "893.png"], // NEW ITEM
+            [55, "Adana Kebab With Rice", "Seasoned minced lamb kebab served with rice.", "£10.99", "grills", "894.png"], // NEW ITEM
+
+            [56, "Kurdish Kafta", "Couscous filled with lamb in tomato sauce (Fridays Only).", "£10.99", "specials"],
+            [57, "Seabass", "Char-grilled whole sea bass, seasoned with spices.", "£14.99", "specials"],
+            [58, "Patcha", "Boiled lamb-head and feet in special sauce.", "£12.99", "specials"],
+            [59, "Dolma", "Stuffed grape leaves/vegetables (Sundays Only).", "£11.99", "specials"],
+
+            [60, "Aubergine Stew (V)", "Aubergine, green pepper, and potatoes stew.", "£2.49", "stews"],
+            [61, "Okra Stew (V)", "Okra cooked in rich tomato sauce.", "£2.49", "stews"],
+            [62, "Kidney Beans Stew (V)", "Beans cooked in rich tomato sauce.", "£2.49", "stews"],
+            [63, "Potato Stew (V)", "Potatoes in tomato sauce with herbs.", "£2.49", "stews"],
+            [64, "Apricots In Sauce (V)", "Sweet apricots in special sauce.", "£2.49", "stews"],
+            [65, "Courgette Stew (V)", "Courgettes in tomato sauce.", "£2.49", "stews"],
+            [66, "Black-Eyed Peas (V)", "Peas in tomato sauce and garlic.", "£2.49", "stews"],
+            [67, "Keema", "Minced meat in tomato sauce.", "£2.99", "stews"],
+            [68, "Green Beans (V)", "Fresh green beans in sauce.", "£2.49", "stews"],
+            [69, "Spinach (V)", "Cooked spinach with garlic and herbs.", "£2.49", "stews"],
+            [70, "Chicken Curry", "Chicken curry with potatoes.", "£3.99", "stews"],
+            [71, "Vegetarian Stew (V)", "Stew of the day. Served with rice and naan.", "£5.99", "stews"],
+            [72, "Chickpeas (V)", "Chickpeas.", "£1.99", "stews"],
+            [73, "Lentil Soup (V)", "Hearty blended lentil soup.", "£1.99", "stews"],
+            [74, "Falafel (V)", "Deep-fried ground chickpeas and garlic.", "£8.99", "stews"],
+            [75, "Plate Of Salad (V)", "Fresh seasonal salad.", "£3.99", "stews"],
+
+            [76, "Bread (V)", "Fresh naan bread.", "£1.99", "basics"],
+            [77, "Rice (V)", "White or yellow rice.", "£1.99", "basics"],
+            [78, "Side: Chips (V)", "Large portion of chips.", "£2.99", "basics"],
+
+            [79, "Soft Drinks (Can)", "Various canned soda.", "£0.99", "extras"],
+            [80, "Soft Drinks (1.5L)", "Large bottle of soda.", "£2.99", "extras"],
+            [81, "Fresh Juice", "Orange, Apple, or Carrot juice.", "£2.49", "extras"],
+            [82, "Baklava", "Traditional sweet pastry (per piece).", "£0.99", "extras"],
+            [83, "Ice Cream", "Ben & Jerry's Ice Cream.", "£5.99", "extras"],
+
+            [84, "Kids: Nuggets", "4 Piece Chicken Nuggets and Chips.", "£3.99", "kids"],
+            [85, "Kids: Chicken Shish", "Chicken Shish and Chips.", "£4.99", "kids"],
+            [86, "Kids: Beefburger", "Beefburger and Chips.", "£4.99", "kids"],
+            [87, "Kids: Falafel (V)", "Falafel and Chips.", "£4.99", "kids"],
+
+            [88, "Deal For 2 (A)", "1/2 Chicken, Lamb, sides, rice, naans.", "£25.99", "deals"],
+            [89, "Deal For 2 (B)", "Mixed Shawarma, Half Chicken, Two PC Lamb, sides, rice.", "£31.99", "deals"],
+            [90, "Deal For 3 (A)", "Mixed Grill, Lamb Shish, Chicken Shish, Chicken Wings, Shish Kebab, Beef Donner, Chicken Donner, 3 Different Sides, Rice, Chips And Bottle Of Coke.", "£34.99", "deals"],
+            [91, "Deal For 4 (Standard)", "Beef Donner, Chicken Donner, 2 Shish Kebab, 2 Chicken Tikka, 2 Lamb Tikka, 4 Naan Bread, Salad, 1 White Rice, 1 Chips, Bottle of coke", "£47.99", "deals"],
+            [92, "Deal For 4 (Family)", "Kofte Kebab, Lamb Shish, Lamb Skewers, Chicken Skewers, Chicken Wings, Lamb Chops, Chips, Rice And Bottle Of Coke.", "£48.99", "deals"],
+            [93, "Deal For 4 or 5", "Fully Loaded Large platter with Chops, Wings, Shawarma, Shish.", "£64.99", "deals"]
         ];
 
         const categories = [
@@ -422,8 +440,9 @@
             { id: 'deals', title: 'Group Deals & Platters' }
         ];
 
+        // Adjusted breakpoints to keep roughly 6-7 items per printed page considering the 93 total
         const breakPoints = new Set([
-            7, 14, 21, 27, 32, 37, 43, 49, 55, 61, 67, 73, 79, 85
+            7, 14, 21, 28, 34, 40, 46, 52, 58, 64, 70, 76, 82, 88
         ]);
 
         const container = document.getElementById('menu-content');
@@ -475,7 +494,9 @@
                 const isEven = (globalIdx % 2 === 0);
                 const isVeg = item[1].includes('(V)');
                 const cleanT = item[1].replace('(V)', '').trim();
-                const filename = getSafeFilename(item[1]);
+                
+                // If a 6th parameter (custom image) exists, use it. Otherwise, use generated filename.
+                const filename = item[5] ? item[5] : getSafeFilename(item[1]);
                 
                 let rowHtml = '';
 
